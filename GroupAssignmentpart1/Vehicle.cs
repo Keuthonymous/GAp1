@@ -96,5 +96,22 @@ namespace GroupAssignmentpart1
             set { pTime = value; }
         }
         #endregion
+        #region Constructor
+        public Vehicle(string LiPlate, string Color, string Brand, string Model, string EngineType, int NumOfWheels, string FuelType, string Transmition, int NumOfDoors, double Fee, string PSpot, DateTime PTime)
+        {
+            this.LiPlate = liPlate;
+            this.Color = color;
+            this.Brand = brand;
+            this.Model = model;
+            this.EngineType = engineType;
+            this.NumOfWheels = numOfWheels;
+            this.FuelType = fuelType;
+            this.Transmition = transmition;
+            this.NumOfDoors = numOfDoors;
+            this.Fee = fee;
+            this.PSpot = pSpot;
+            this.PTime = pTime;
+        }
+        #endregion
     }
 }

@@ -14,9 +14,11 @@ namespace GroupAssignmentpart1
         /// Allows the user to park a vehicle
         /// </summary>
         /// <param name="vehicle">Vehicle to be parked</param>
-        public static void ParkVehicle(Vehicle vehicle)
+        public static int ParkVehicle(Vehicle vehicle)
         {
             garage.Add(vehicle);
+
+            return garage.ToList().IndexOf(vehicle);
         }
 
         /// <summary>

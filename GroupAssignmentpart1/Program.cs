@@ -36,7 +36,7 @@ namespace GroupAssignmentpart1
                         MenuCheckOutVehicle();
                         break;
                     case "0":
-                        exit = ConfirmExit();
+                        exit = true;
                         break;
                 }
             }
@@ -120,7 +120,7 @@ namespace GroupAssignmentpart1
         private static void MenuCheckInVehicle()
         {
             bool exit = false;
-            Menu menu = new Menu(new Dictionary<string, string> { {"1", "Motorcycle." },
+            Menu menu = new Menu(new Dictionary<string, string> { { "1", "Motorcycle." },
                                                                   { "2", "Car." },
                                                                   { "3", "Bus." },
                                                                   { "4", "Truck." },
@@ -151,38 +151,178 @@ namespace GroupAssignmentpart1
             while (!exit);
         }
 
+        private static void CheckInMotorcycle()
+        {
+            string vehicleName = "motorcycle";
+
+            string liPlate = GetString("registration plate", vehicleName, false);
+            string color = GetString("color", vehicleName);
+            string brand = GetString("brand", vehicleName);
+            string model = GetString("model", vehicleName);
+            string engineType = GetString("engine type", vehicleName);
+            string fuelType = GetString("fuel type", vehicleName);
+            string transmition = GetString("transmition", vehicleName);
+
+            Motorcycle motorcycle = new Motorcycle(liPlate, color, brand, model, engineType, fuelType, transmition);
+
+            int parkingPlace = GarageLogic.ParkVehicle(motorcycle);
+
+            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+        }
+
         private static void CheckInCar()
         {
-            throw new NotImplementedException();
+            string vehicleName = "car";
+
+            string liPlate = GetString("registration plate", vehicleName, false);
+            string color = GetString("color", vehicleName);
+            string brand = GetString("brand", vehicleName);
+            string model = GetString("model", vehicleName);
+            string engineType = GetString("engine type", vehicleName);
+            string fuelType = GetString("fuel type", vehicleName);
+            string transmition = GetString("transmition", vehicleName);
+            int numOfDoors = GetInteger("number of doors", vehicleName);
+
+            Car car = new Car(liPlate, color, brand, model, engineType, fuelType, transmition, numOfDoors);
+
+            int parkingPlace = GarageLogic.ParkVehicle(car);
+
+            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
         }
 
         private static void CheckInBus()
         {
-            throw new NotImplementedException();
-        }
+            string vehicleName = "bus";
 
-        private static void CheckInMotorcycle()
-        {
-            throw new NotImplementedException();
+            string liPlate = GetString("registration plate", vehicleName, false);
+            string color = GetString("color", vehicleName);
+            string brand = GetString("brand", vehicleName);
+            string model = GetString("model", vehicleName);
+            string engineType = GetString("engine type", vehicleName);
+            string fuelType = GetString("fuel type", vehicleName);
+            string transmition = GetString("transmition", vehicleName);
+
+            Bus bus = new Bus(liPlate, color, brand, model, engineType, fuelType, transmition);
+
+            int parkingPlace = GarageLogic.ParkVehicle(bus);
+
+            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
         }
 
         private static void CheckInTruck()
         {
-            throw new NotImplementedException();
+            string vehicleName = "truck";
+
+            string liPlate = GetString("registration plate", vehicleName, false);
+            string color = GetString("color", vehicleName);
+            string brand = GetString("brand", vehicleName);
+            string model = GetString("model", vehicleName);
+            string engineType = GetString("engine type", vehicleName);
+            int numOfWheels = GetInteger("number of wheels", vehicleName);
+            string fuelType = GetString("fuel type", vehicleName);
+            string transmition = GetString("transmition", vehicleName);
+
+            Truck truck = new Truck(liPlate, color, brand, model, engineType, numOfWheels, fuelType, transmition);
+
+            int parkingPlace = GarageLogic.ParkVehicle(truck);
+
+            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+        }
+
+        private static string GetString(string stringName, string vehicleName, bool allowBlank = true)
+        {
+            string input = string.Empty;
+            string canLetBlank = string.Empty;
+
+            if (allowBlank)
+                canLetBlank = " (just press 'Enter' if you want to let it blank)";
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter the {0} of the {1}{2}:", stringName, vehicleName, canLetBlank);
+                input = Console.ReadLine();
+
+                if (input.Length == 0 && !allowBlank)
+                {
+                    Console.WriteLine("The value you entered is incorrect!");
+                    input = string.Empty;
+                }
+            }
+            while (input.Length == 0);
+
+            return input;
+        }
+
+        private static int GetInteger(string integerName, string vehicleName)
+        {
+            string input = string.Empty;
+            int result = 0;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter the {0} of the {1}:", integerName, vehicleName);
+                input = Console.ReadLine();
+
+                if (!int.TryParse(input, out result))
+                {
+                    Console.WriteLine("The value you entered is incorrect!");
+                    input = string.Empty;
+                }
+            }
+            while (input.Length == 0);
+
+            return result;
         }
 
         #endregion
 
+        #region Check out a vehicle
+
         private static void MenuCheckOutVehicle()
         {
-            throw new NotImplementedException();
+            bool exit = false;
+
+            do
+            {
+                Dictionary<string, string> menuItems = new Dictionary<string, string>();
+                Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
+
+                int noVehicle = 1;
+                foreach (Vehicle vehicle in GarageLogic.Vehicles())
+                {
+                    menuItems.Add(noVehicle.ToString(), vehicle.ToString());
+                    vehicles.Add(noVehicle.ToString(), vehicle);
+
+                    noVehicle += 1;
+                }
+
+                menuItems.Add("-1", string.Empty);
+                menuItems.Add("0", "Exit.");
+
+                string input = new Menu(menuItems, "Vehicles currently parked in the garage:").Show();
+
+                if (input == "0")
+                    exit = true;
+                else if (ConfirmCheckOut())
+                {
+                    Vehicle vehicle = vehicles[input];
+                    double fee = GarageLogic.UnparkVehicle(vehicle);
+                    Console.WriteLine("The vehicle has been parked since {0}, which gives a fee of {1:N2}", vehicle.PTime.ToString(), vehicle.Fee);
+                    Console.ReadKey();
+                }
+            }
+            while (!exit);
         }
 
-        private static bool ConfirmExit()
+        #endregion
+
+        private static bool ConfirmCheckOut()
         {
             return (new Menu(new Dictionary<string, string> { { "Y", "Yes." }, 
                                                               { "N", "No." } },
-                             "Are you sure you want to exit?")
+                             "Do you really want to check out the chosen vehicle?")
                              .Show()
                              .ToUpper() == "Y");
         }

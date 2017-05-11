@@ -8,8 +8,8 @@ namespace GroupAssignmentpart1
 {
     class Motorcycle:Vehicle
     {
-        public Motorcycle(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition, double fee)
-            : base( liPlate, color, brand, model, engineType, 2, fuelType, transmition, 0, fee)
+        public Motorcycle(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition)
+            : base( liPlate, color, brand, model, engineType, 2, fuelType, transmition, 0, 15)
         {
         }
     }

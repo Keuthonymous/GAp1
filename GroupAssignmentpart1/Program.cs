@@ -102,6 +102,10 @@ namespace GroupAssignmentpart1
         private static void SearchByVehicleType()
         {
             Console.WriteLine("Please enter the brand and model of car that you're searching for: ");
+            string brand = GetString("brand", "vehicle", false);
+            string model = GetString("model", "vehicle", false);
+
+            Console.WriteLine(GarageLogic.SearchByVehicleType(brand, model));
 
         }
 

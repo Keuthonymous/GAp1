@@ -33,6 +33,8 @@ namespace GroupAssignmentpart1
         private double fee;
         private string pSpot;
         private DateTime pTime;
+        private int p1;
+        private int p2;
         #endregion
         #region PublicProperties
         public string LiPlate
@@ -111,6 +113,21 @@ namespace GroupAssignmentpart1
             this.Fee = fee;
             this.PSpot = pSpot;
             this.PTime = pTime;
+        }
+
+        public Vehicle(string liPlate, string color, string brand, string model, string engineType, int numOfWheels, string fuelType, string transmition, int numOfDoors, double fee)
+        {
+            // TODO: Complete member initialization
+            this.liPlate = liPlate;
+            this.color = color;
+            this.brand = brand;
+            this.model = model;
+            this.engineType = engineType;
+            this.numOfWheels = numOfWheels;
+            this.fuelType = fuelType;
+            this.transmition = transmition;
+            this.numOfDoors = numOfDoors;
+            this.fee = fee;
         }
         #endregion
         #region Methods

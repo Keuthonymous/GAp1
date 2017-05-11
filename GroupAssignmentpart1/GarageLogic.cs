@@ -55,7 +55,16 @@ namespace GroupAssignmentpart1
         {
             return garage.SearchByLiPlate(LiPlate);
         }
-
+        /// <summary>
+        /// Allows the user to search for vehicles in the garage by brand and model.
+        /// </summary>
+        /// <param name="<Brand">brand of the car</param>
+        /// <param name="model" model of car</param>
+        /// <returns></returns>
+        public static IEnumerable<Vehicle> SearchByVehicleType(string Brand, string Model)
+        {
+            return garage.SearchByVehicleType(Brand, Model);
+        }
         /// <summary>
         /// Allows the user to search for vehicles in the garage those have been parked before or after a given date
         /// </summary>

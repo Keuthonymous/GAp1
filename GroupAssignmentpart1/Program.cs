@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,7 +96,6 @@ namespace GroupAssignmentpart1
             {
                 Console.WriteLine(GarageLogic.SearchByLiPlate(LiPlate));
             }
-
             Console.ReadKey();
         }
 
@@ -105,13 +105,16 @@ namespace GroupAssignmentpart1
             string brand = GetString("brand", "vehicle", false);
             string model = GetString("model", "vehicle", false);
 
-            Console.WriteLine(GarageLogic.SearchByVehicleType(brand, model));
+            DisplayVehicles(GarageLogic.SearchByVehicleType(brand, model), "result");
+            Console.ReadKey();
 
         }
 
         private static void SearchByParkingDate()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please enter the time that your car was parked");
+
+            GetDateTime();
         }
 
         #endregion
@@ -329,7 +332,7 @@ namespace GroupAssignmentpart1
                              .ToUpper() == "Y");
         }
 
-        private static void DisplayVehicles(List<Vehicle> vehicles, string title)
+        private static void DisplayVehicles(IEnumerable<Vehicle> vehicles, string title)
         {
             Dictionary<string, string> menuItems = new Dictionary<string, string>();
             Dictionary<string, Vehicle> dicVehicles = new Dictionary<string, Vehicle>();
@@ -347,7 +350,23 @@ namespace GroupAssignmentpart1
             menuItems.Add(noVehicle.ToString(), string.Empty);
             menuItems.Add("0", "Exit.");
 
-            new Menu(menuItems, title, new List<string> { "" }).Show();
+            new Menu(menuItems, title, new List<string> { "color",
+                                "brand",
+                                "model",
+                                "reg. plate",
+                                "engine type",
+                                "transmition",
+                                "number of doors",
+                                "number of wheels",
+                                "fuel type" }).Show();
+        }
+        private static void GetDateTime()
+        {
+            string Format = "dd/MM/yyyy HH:mm";
+            Console.WriteLine("Enter the date you parked in (dd/MM/yyyy hh:mm) time format.");
+
+            string timeInput = Console.ReadLine();
+            DateTime dateTime = DateTime.ParseExact(timeInput, Format, CultureInfo.InvariantCulture);
         }
     }
 }

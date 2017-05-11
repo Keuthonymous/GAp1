@@ -136,6 +136,20 @@ namespace GroupAssignmentpart1
         #endregion
 
         #region Methods
+        public override string ToString()
+        {
+            return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
+                                new string[]{color,
+                                brand,
+                                model,
+                                liPlate,
+                                engineType,
+                                transmition,
+                                numOfDoors.ToString(),
+                                numOfWheels.ToString(),
+                                fuelType,
+                                pTime.ToString()});
+        }
 
         public bool Equals(Vehicle other)
         {

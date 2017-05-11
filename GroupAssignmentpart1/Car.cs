@@ -11,6 +11,7 @@ namespace GroupAssignmentpart1
         public Car(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition, int numOfDoors)
             : base( liPlate, color, brand, model, engineType, 4, fuelType, transmition, numOfDoors, 20)
         {
+
         }
     }
 }

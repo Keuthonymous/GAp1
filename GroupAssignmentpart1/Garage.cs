@@ -17,8 +17,8 @@ namespace GroupAssignmentpart1
         internal void Add(T vehicle)
         {
             garage.Add(vehicle);
-            vehicle.PTime = DateTime.Now.Date;
-            vehicle.PSpot = availablePlace;
+            vehicle.PTime = DateTime.Now;
+            vehicle.PSpot = garage.ToList().IndexOf(vehicle);
             availablePlace += 1;
         }
 

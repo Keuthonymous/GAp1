@@ -127,7 +127,7 @@ namespace GroupAssignmentpart1
                                                                   { "3", "Bus." },
                                                                   { "4", "Truck." },
                                                                   { "0", "Exit." } },
-                                "What type of vehicle do you want to check in?");
+                                 "What type of vehicle do you want to check in?");
 
             do
             {
@@ -348,7 +348,7 @@ namespace GroupAssignmentpart1
             menuItems.Add(noVehicle.ToString(), string.Empty);
             menuItems.Add("0", "Exit.");
 
-            new Menu(menuItems, title).Show();
+            new Menu(menuItems, title, new List<string> { "" }).Show();
         }
     }
 }

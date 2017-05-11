@@ -18,7 +18,7 @@ namespace GroupAssignmentpart1
         {
             garage.Add(vehicle);
 
-            return garage.ToList().IndexOf(vehicle);
+            return vehicle.PSpot;
         }
 
         /// <summary>

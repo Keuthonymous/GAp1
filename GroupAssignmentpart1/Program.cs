@@ -115,10 +115,63 @@ namespace GroupAssignmentpart1
 
         #endregion
 
+        #region Check in a vehicle
+
         private static void MenuCheckInVehicle()
         {
-            
+            bool exit = false;
+            Menu menu = new Menu(new Dictionary<string, string> { {"1", "Motorcycle." },
+                                                                  { "2", "Car." },
+                                                                  { "3", "Bus." },
+                                                                  { "4", "Truck." },
+                                                                  { "0", "Exit." } },
+                                "What type of vehicle do you want to check in?");
+
+            do
+            {
+                switch (menu.Show())
+                {
+                    case "1":
+                        CheckInMotorcycle();
+                        break;
+                    case "2":
+                        CheckInCar();
+                        break;
+                    case "3":
+                        CheckInBus();
+                        break;
+                    case "4":
+                        CheckInTruck();
+                        break;
+                    default:
+                        exit = true;
+                        break;
+                }
+            }
+            while (!exit);
         }
+
+        private static void CheckInCar()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void CheckInBus()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void CheckInMotorcycle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void CheckInTruck()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         private static void MenuCheckOutVehicle()
         {

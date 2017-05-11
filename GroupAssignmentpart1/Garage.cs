@@ -24,8 +24,8 @@ namespace GroupAssignmentpart1
         internal Vehicle SearchByLiPlate(string LiPlate)
         {
             var query = (from v in garage
-                        where v.LiPlate == LiPlate
-                        orderby v.LiPlate
+                         where v.LiPlate == LiPlate
+                         orderby v.LiPlate
                          select v).FirstOrDefault();
 
             return query;
@@ -46,6 +46,6 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException(); //To this ^^
         }
 
-        public IEnumerable<T> Vehicles { get; private set; }
+        public List<T> Vehicles { get { return garage; } private set; }
     }
 }

@@ -36,12 +36,12 @@ namespace GroupAssignmentpart1
         /// Returns a string containing all information of all vehicles currently parked in the garage
         /// </summary>
         /// <returns></returns>
-        public static List<string> Vehicles()
+        public static List<Vehicle> Vehicles()
         {
-            List<string> result = new List<string>();
+            List<Vehicle> result = new List<Vehicle>();
 
             foreach (Vehicle vehicle in garage.Vehicles)
-                result.Add(vehicle.ToString());
+                result.Add(vehicle);
 
             return result;
         }

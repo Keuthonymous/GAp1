@@ -8,7 +8,6 @@ namespace GroupAssignmentpart1
 {
     class Garage<T>:IEnumerable<T> where T:Vehicle
     {
-        protected static List<T> Garage = new List<T>();
 
         internal void Add(Vehicle vehicle)
         {
@@ -20,9 +19,9 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException();
         }
 
-        internal T SearchByLiPlate(string LiPlate)
+        internal Vehicle SearchByLiPlate(string LiPlate)
         {
-            var query = from v in Garage
+            var query = from v in GarageLogic.garage
                         where v.LiPlate == LiPlate
                         orderby v.LiPlate
                         select v;

@@ -9,25 +9,24 @@ namespace GroupAssignmentpart1
 {
     class Garage<T>:IEnumerable<T> where T:Vehicle
     {
+        private List<T> garage = new List<T>();
 
-        internal void Add(Vehicle vehicle)
+        internal void Add(T vehicle)
         {
-            throw new NotImplementedException();
+            garage.Add(vehicle);
         }
 
-        internal bool Remove(Vehicle vehicle)
+        internal bool Remove(T vehicle)
         {
-            throw new NotImplementedException();
+            return garage.Remove(vehicle);
         }
 
-        internal Vehicle SearchByLiPlate(string LiPlate)
+        internal T SearchByLiPlate(string LiPlate)
         {
-            var query = from v in GarageLogic.garage
-                        where v.LiPlate == LiPlate
-                        orderby v.LiPlate
-                        select v;
-
-            return query;
+            return (from v in garage    
+                    where v.LiPlate == LiPlate
+                    orderby v.LiPlate
+                    select v).FirstOrDefault();
         }
 
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)

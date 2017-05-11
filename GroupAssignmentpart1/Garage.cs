@@ -14,6 +14,7 @@ namespace GroupAssignmentpart1
         internal void Add(T vehicle)
         {
             garage.Add(vehicle);
+            vehicle.PSpot = garage.ToList().IndexOf(vehicle);
         }
 
         internal bool Remove(T vehicle)
@@ -21,18 +22,18 @@ namespace GroupAssignmentpart1
             return garage.Remove(vehicle);
         }
 
-        internal T SearchByLiPlate(string LiPlate)
+        internal T SearchByLiPlate(string liPlate)
         {
             return (from v in garage
-                    where v.LiPlate == LiPlate
+                    where v.LiPlate == liPlate
                     orderby v.LiPlate
                     select v).FirstOrDefault();
         }
 
-        internal IEnumerable<T> SearchByVehicleType(string Brand, string Model)
+        internal IEnumerable<T> SearchByVehicleType(string brand, string model)
         {
             var query = from v in garage
-                        where v.Brand == Brand && v.Model == Model
+                        where string.Compare(v.Brand, brand, true) == 0 && string.Compare(v.Model, model, true) == 0
                         orderby v.LiPlate
                         select v;
             return query;
@@ -40,17 +41,20 @@ namespace GroupAssignmentpart1
 
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)
         {
-            throw new NotImplementedException();
+            if (before)
+                return garage.Where(t => t.PTime <= date);
+            else
+                return garage.Where(t => t.PTime >= date);
         }
 
-        public IEnumerator<T> GetEnumerator() //Did this VV
+        public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return garage.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException(); //To this ^^
+            return this.GetEnumerator();
         }
 
         public List<T> Vehicles { get { return garage; } private set { } }

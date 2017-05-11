@@ -44,6 +44,6 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException(); //To this ^^
         }
 
-        public List<T> Vehicles { get { return garage; } private set; }
+        public List<T> Vehicles { get { return garage; } private set { } }
     }
 }

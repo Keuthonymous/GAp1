@@ -99,7 +99,7 @@ namespace GroupAssignmentpart1
         }
         #endregion
         #region Constructor
-        public Vehicle(string LiPlate, string Color, string Brand, string Model, string EngineType, int NumOfWheels, string FuelType, string Transmition, int NumOfDoors, double Fee, string PSpot, DateTime PTime)
+        /*public Vehicle(string LiPlate, string Color, string Brand, string Model, string EngineType, int NumOfWheels, string FuelType, string Transmition, int NumOfDoors, double Fee, string PSpot, DateTime PTime)
         {
             this.LiPlate = liPlate;
             this.Color = color;
@@ -113,7 +113,7 @@ namespace GroupAssignmentpart1
             this.Fee = fee;
             this.PSpot = pSpot;
             this.PTime = pTime;
-        }
+        }*/
 
         public Vehicle(string liPlate, string color, string brand, string model, string engineType, int numOfWheels, string fuelType, string transmition, int numOfDoors, double fee)
         {

@@ -17,5 +17,15 @@ namespace GroupAssignmentpart1
         //Transmition
         //Amount of doors
         //fee
+        //Parking spot
+        //Parking time
+
+        #region PrivateVariables
+        private string liPlate;
+        private string color;
+        private string brand;
+        private string model;
+        private string engineType;
+        #endregion
     }
 }

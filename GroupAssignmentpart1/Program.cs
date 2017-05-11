@@ -73,7 +73,8 @@ namespace GroupAssignmentpart1
 
             Menu menu = new Menu(new Dictionary<string, string> { { "1", "Registration number." },
                                                                   { "2", "Type of vehicle." },
-                                                                  { "3", "Parking date."} },
+                                                                  { "3", "Parking date."},
+                                                                  { "0", "Exit."} },
                                  "Do you want to search by:");
 
             do
@@ -116,7 +117,7 @@ namespace GroupAssignmentpart1
 
         private static void MenuCheckInVehicle()
         {
-            throw new NotImplementedException();
+            
         }
 
         private static void MenuCheckOutVehicle()

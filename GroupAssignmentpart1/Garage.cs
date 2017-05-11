@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
-    class Garage<T>:IEnumerable<T> where T:Vehicle
+    class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private List<T> garage = new List<T>();
 
@@ -23,10 +23,10 @@ namespace GroupAssignmentpart1
 
         internal T SearchByLiPlate(string LiPlate)
         {
-            return (from v in garage    
-                        where v.LiPlate == LiPlate
-                        orderby v.LiPlate
-                         select v).FirstOrDefault();
+            return (from v in garage
+                    where v.LiPlate == LiPlate
+                    orderby v.LiPlate
+                    select v).FirstOrDefault();
         }
 
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)
@@ -44,6 +44,6 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException(); //To this ^^
         }
 
-        public List<T> Vehicles { get { return garage; } private set; }
+        public List<T> Vehicles { get { return garage; } private set { } }
     }
 }

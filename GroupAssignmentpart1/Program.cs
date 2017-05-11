@@ -46,23 +46,7 @@ namespace GroupAssignmentpart1
 
         private static void MenuViewInformation()
         {
-            Dictionary<string, string> menuItems = new Dictionary<string, string>();
-            Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
-
-            int noVehicle = -1;
-            foreach (Vehicle vehicle in GarageLogic.Vehicles())
-            {
-                menuItems.Add(noVehicle.ToString(), vehicle.ToString());
-                vehicles.Add(noVehicle.ToString(), vehicle);
-
-                noVehicle -= 1;
-            }
-
-            noVehicle -= 1;
-            menuItems.Add(noVehicle.ToString(), string.Empty);
-            menuItems.Add("0", "Exit.");
-
-            new Menu(menuItems, "Vehicles currently parked in the garage:").Show();
+            DisplayVehicles(GarageLogic.Vehicles(), "Vehicles currently parked in the garage:");
         }
 
         #region Searching for vehicles
@@ -250,6 +234,7 @@ namespace GroupAssignmentpart1
         {
             string input = string.Empty;
             string canLetBlank = string.Empty;
+            bool inputOK = true;
 
             if (allowBlank)
                 canLetBlank = " (just press 'Enter' if you want to let it blank)";
@@ -263,10 +248,10 @@ namespace GroupAssignmentpart1
                 if (input.Length == 0 && !allowBlank)
                 {
                     Console.WriteLine("The value you entered is incorrect!");
-                    input = string.Empty;
+                    inputOK = false;
                 }
             }
-            while (input.Length == 0);
+            while (!inputOK);
 
             return input;
         }
@@ -344,6 +329,25 @@ namespace GroupAssignmentpart1
                              .ToUpper() == "Y");
         }
 
+        private static void DisplayVehicles(List<Vehicle> vehicles, string title)
+        {
+            Dictionary<string, string> menuItems = new Dictionary<string, string>();
+            Dictionary<string, Vehicle> dicVehicles = new Dictionary<string, Vehicle>();
 
+            int noVehicle = -1;
+            foreach (Vehicle vehicle in vehicles)
+            {
+                menuItems.Add(noVehicle.ToString(), vehicle.ToString());
+                dicVehicles.Add(noVehicle.ToString(), vehicle);
+
+                noVehicle -= 1;
+            }
+
+            noVehicle -= 1;
+            menuItems.Add(noVehicle.ToString(), string.Empty);
+            menuItems.Add("0", "Exit.");
+
+            new Menu(menuItems, title).Show();
+        }
     }
 }

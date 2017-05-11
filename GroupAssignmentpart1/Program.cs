@@ -65,9 +65,54 @@ namespace GroupAssignmentpart1
             new Menu(menuItems, "Vehicles currently parked in the garage:").Show();
         }
 
+        #region Searching for vehicles
+
         private static void MenuSearchVehicles()
         {
+            bool exit = false;
+
+            Menu menu = new Menu(new Dictionary<string, string> { { "1", "Registration number." },
+                                                                  { "2", "Type of vehicle." },
+                                                                  { "3", "Parking date."} },
+                                 "Do you want to search by:");
+
+            do
+            {
+                switch (menu.Show())
+                {
+                    case "1":
+                        SearchByRegistrationNumber();
+                        break;
+                    case "2":
+                        SearchByVehicleType();
+                        break;
+                    case "3":
+                        SearchByParkingDate();
+                        break;
+                    default:
+                        exit = true;
+                        break;
+                }
+            }
+            while (!exit);
         }
+
+        private static void SearchByRegistrationNumber()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void SearchByVehicleType()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void SearchByParkingDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         private static void MenuCheckInVehicle()
         {

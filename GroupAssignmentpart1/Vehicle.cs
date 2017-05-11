@@ -142,7 +142,8 @@ namespace GroupAssignmentpart1
                                 transmition,
                                 numOfDoors.ToString(),
                                 numOfWheels.ToString(),
-                                fuelType});
+                                fuelType,
+                                pTime.ToString()});
         }
 
         public bool Equals(Vehicle other)

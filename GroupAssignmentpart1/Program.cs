@@ -114,7 +114,18 @@ namespace GroupAssignmentpart1
         {
             Console.WriteLine("Please enter the time that your car was parked");
 
-            GetDateTime();
+            string timeInput = "";
+            DateTime PTime = GetDateTime(timeInput);
+            DateTime now = DateTime.Now.Date;
+            if (PTime < now)
+            {
+                bool before = true;
+                while (before == true)
+                {
+                    Console.WriteLine(GarageLogic.SearchByParkingDate(PTime, before));
+                    Console.ReadKey();
+                }
+            }
         }
 
         #endregion
@@ -274,6 +285,7 @@ namespace GroupAssignmentpart1
                 {
                     Console.WriteLine("The value you entered is incorrect!");
                     input = string.Empty;
+                    Console.ReadKey();
                 }
             }
             while (input.Length == 0);
@@ -357,16 +369,19 @@ namespace GroupAssignmentpart1
                                 "engine type",
                                 "transmition",
                                 "number of doors",
-                                "number of wheels",
-                                "fuel type" }).Show();
+                                "fuel type",
+                                "time parked"}).Show();
         }
-        private static void GetDateTime()
+        private static DateTime GetDateTime(string timeInput)
         {
             string Format = "dd/MM/yyyy HH:mm";
             Console.WriteLine("Enter the date you parked in (dd/MM/yyyy hh:mm) time format.");
 
-            string timeInput = Console.ReadLine();
+            timeInput = Console.ReadLine();
+            DateTime now = DateTime.Now.Date;
             DateTime dateTime = DateTime.ParseExact(timeInput, Format, CultureInfo.InvariantCulture);
+
+            return dateTime;
         }
     }
 }

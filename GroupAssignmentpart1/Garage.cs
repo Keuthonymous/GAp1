@@ -10,11 +10,14 @@ namespace GroupAssignmentpart1
     class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private List<T> garage = new List<T>();
+        private int availablePlace = 0;
 
         internal void Add(T vehicle)
         {
             garage.Add(vehicle);
+            vehicle.PTime = DateTime.Now;
             vehicle.PSpot = garage.ToList().IndexOf(vehicle);
+            availablePlace += 1;
         }
 
         internal bool Remove(T vehicle)

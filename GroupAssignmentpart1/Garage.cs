@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
-    class Garage<T>:IEnumerable<T> where T:Vehicle
+    class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        protected static List<T> Garage = new List<T>();
+        protected static List<T> garage = new List<T>();
 
         internal void Add(Vehicle vehicle)
         {
@@ -22,10 +22,10 @@ namespace GroupAssignmentpart1
 
         internal T SearchByLiPlate(string LiPlate)
         {
-            var query = from v in Garage
-                        where v.LiPlate == LiPlate
-                        orderby v.LiPlate
-                        select v;
+            var query = (from v in garage
+                         where v.LiPlate == LiPlate
+                         orderby v.LiPlate
+                         select v).FirstOrDefault();
 
             return query;
         }

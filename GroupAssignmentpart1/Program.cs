@@ -233,6 +233,7 @@ namespace GroupAssignmentpart1
         {
             string input = string.Empty;
             string canLetBlank = string.Empty;
+            bool inputOK = true;
 
             if (allowBlank)
                 canLetBlank = " (just press 'Enter' if you want to let it blank)";
@@ -246,10 +247,10 @@ namespace GroupAssignmentpart1
                 if (input.Length == 0 && !allowBlank)
                 {
                     Console.WriteLine("The value you entered is incorrect!");
-                    input = string.Empty;
+                    inputOK = false;
                 }
             }
-            while (input.Length == 0);
+            while (!inputOK);
 
             return input;
         }

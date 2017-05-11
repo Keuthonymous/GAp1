@@ -106,6 +106,7 @@ namespace GroupAssignmentpart1
             string model = GetString("model", "vehicle", false);
 
             Console.WriteLine(GarageLogic.SearchByVehicleType(brand, model));
+            Console.ReadKey();
 
         }
 

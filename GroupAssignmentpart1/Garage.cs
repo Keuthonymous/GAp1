@@ -45,7 +45,7 @@ namespace GroupAssignmentpart1
 
         public IEnumerator<T> GetEnumerator() //Did this VV
         {
-            throw new NotImplementedException();
+            return garage.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

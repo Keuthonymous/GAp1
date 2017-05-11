@@ -8,6 +8,12 @@ namespace GroupAssignmentpart1
 {
     class Garage<T>:IEnumerable<T> where T:Vehicle
     {
+        internal List<T> Garage;
+
+        internal Garage()
+        {
+            Garage = new List<T>();
+        }
         internal void Add(Vehicle vehicle)
         {
             throw new NotImplementedException();
@@ -18,9 +24,14 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException();
         }
 
-        internal T SearchByIdentificationPlate(string identificationPlate)
+        internal T SearchByLiPlate(string LiPlate)
         {
-            throw new NotImplementedException();
+            var query = from v in Garage
+                        where v.LiPlate == LiPlate
+                        orderby v.LiPlate
+                        select v;
+
+            return query;
         }
 
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)

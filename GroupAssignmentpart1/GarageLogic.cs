@@ -30,22 +30,22 @@ namespace GroupAssignmentpart1
         /// <summary>
         /// Allows the user to search for a vehicle according to its identification plate
         /// </summary>
-        /// <param name="identificationPlate">Identificaction plate to be searched in the garage</param>
+        /// <param name="LiPlate">Identificaction plate to be searched in the garage</param>
         /// <returns></returns>
-        public static Vehicle SearchByIdentificationPlate(string identificationPlate)
+        public static Vehicle SearchByLiPlate(string LiPlate)
         {
-            return garage.SearchByIdentificationPlate(identificationPlate);
+            return garage.SearchByLiPlate(LiPlate);
         }
 
         /// <summary>
         /// Allows the user to search for vehicles in the garage those have been parked before or after a given date
         /// </summary>
-        /// <param name="date">Date the parking date of the vehicle has to be compared with</param>
+        /// <param name="<PTime">Date the parking date of the vehicle has to be compared with</param>
         /// <param name="before">Indicates if the vehicles have to have been parked before or after the given date</param>
         /// <returns></returns>
-        public static IEnumerable<Vehicle> SearchByParkingDate(DateTime date, bool before)
+        public static IEnumerable<Vehicle> SearchByParkingDate(DateTime PTime, bool before)
         {
-            return garage.SearchByParkingDate(date, before);
+            return garage.SearchByParkingDate(PTime, before);
         }
     }
 }

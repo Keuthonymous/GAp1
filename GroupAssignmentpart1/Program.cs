@@ -11,18 +11,31 @@ namespace GroupAssignmentpart1
         static void Main(string[] args)
         {
             //Initial commit
-            Menu();
+            MainMenu();
 
         }
 
-        static void Menu()
+        static void MainMenu()
         {
-            Console.Clear();
-            Console.WriteLine("");
-            switch (Console.ReadKey().KeyChar)
+            Menu menu = new Menu(new Dictionary<string, string> { { "1", "Something."},
+                                                                  { "Q", "Exit."}},
+                                 "Title");
+
+            switch (menu.Show())
             {
-                case '1': Console.Clear(); Console.WriteLine("Q) Exit"); switch (Console.ReadKey().KeyChar) { case 'q': ConfirmToMenu(); break; } break;
-                case 'q': ConfirmExit(); break;
+                case "1":
+                    Console.Clear();
+                    Console.WriteLine("Q) Exit");
+                    switch (Console.ReadKey().KeyChar)
+                    {
+                        case 'q':
+                            ConfirmExit();
+                            break;
+                    } break;
+                case "Q":
+                case "q":
+                    ConfirmExit();
+                    break;
             }
         }
 
@@ -32,7 +45,7 @@ namespace GroupAssignmentpart1
             switch (Console.ReadKey().KeyChar)
             {
                 case 'y': break;
-                case 'n': Menu(); break;
+                case 'n': MainMenu(); break;
             }
         }
             

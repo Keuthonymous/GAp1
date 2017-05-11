@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GruppArbeteFUB.Menus
+namespace GroupAssignmentpart1
 {
     public static class Constants
     {

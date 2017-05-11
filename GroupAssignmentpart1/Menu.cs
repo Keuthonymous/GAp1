@@ -61,14 +61,15 @@ namespace GroupAssignmentpart1
 
         private List<string> PrepareMenuItems()
         {
+            List<string> lstColumnsTmp = lstColumns.ToList();
             // Adding an extra column in order to display the menu item choices
-            lstColumns.Insert(0, string.Empty);
-            List<List<string>> lstLstColumnMenu = new List<List<string>> { lstColumns };
+            lstColumnsTmp.Insert(0, string.Empty);
+            List<List<string>> lstLstColumnMenu = new List<List<string>> { lstColumnsTmp };
 
             bool boolColumnName = false;
 
             lstMaxLengthsColumns = new List<int>();
-            foreach (string column in lstColumns)
+            foreach (string column in lstColumnsTmp)
             {
                 lstMaxLengthsColumns.Add(column.Length);
                 if (column.Length > 0)
@@ -89,12 +90,12 @@ namespace GroupAssignmentpart1
                 List<string> lstSubItems = dicMenuItems[menuItem].Split(Constants.MENU_ITEMS_SEPARATOR).ToList();
 
                 // Make sure that each line has the right amount of columns
-                while (lstSubItems.Count < lstColumns.Count - 1)
+                while (lstSubItems.Count < lstColumnsTmp.Count - 1)
                     lstSubItems.Add(string.Empty);
 
-                while (lstColumns.Count < lstSubItems.Count)
+                while (lstColumnsTmp.Count < lstSubItems.Count)
                 {
-                    lstColumns.Add(string.Empty);
+                    lstColumnsTmp.Add(string.Empty);
                     lstMaxLengthsColumns.Add(0);
                 }
                 // Each line has now the right amount of columns

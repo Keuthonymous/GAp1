@@ -8,8 +8,8 @@ namespace GroupAssignmentpart1
 {
     class Car:Vehicle
     {
-        public Car(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition, int numOfDoors, double fee)
-            : base( liPlate, color, brand, model, engineType, 4, fuelType, transmition, numOfDoors, fee)
+        public Car(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition, int numOfDoors)
+            : base( liPlate, color, brand, model, engineType, 4, fuelType, transmition, numOfDoors, 20)
         {
         }
     }

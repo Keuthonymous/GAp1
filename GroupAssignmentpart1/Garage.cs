@@ -8,12 +8,8 @@ namespace GroupAssignmentpart1
 {
     class Garage<T>:IEnumerable<T> where T:Vehicle
     {
-        internal List<T> Garage;
+        protected static List<T> Garage = new List<T>();
 
-        internal Garage()
-        {
-            Garage = new List<T>();
-        }
         internal void Add(Vehicle vehicle)
         {
             throw new NotImplementedException();

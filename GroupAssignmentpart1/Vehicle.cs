@@ -34,5 +34,67 @@ namespace GroupAssignmentpart1
         private string pSpot;
         private DateTime pTime;
         #endregion
+        #region PublicProperties
+        public string LiPlate
+        {
+            get { return liPlate; }
+            set { liPlate = value; }
+        }
+        public string Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+        public string Brand
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public string Model
+        {
+            get { return model; }
+            set { model = value; }
+        }
+        public string EngineType
+        {
+            get { return engineType; }
+            set { engineType = value; }
+        }
+        public int NumOfWheels
+        {
+            get { return numOfWheels; }
+            set { numOfWheels = value; }
+        }
+        public string FuelType
+        {
+            get { return fuelType; }
+            set { fuelType = value; }
+        }
+        public string Transmition
+        {
+            get { return transmition; }
+            set { transmition = value; }
+        }
+        public int NumOfDoors
+        {
+            get { return numOfDoors; }
+            set { numOfDoors = value; }
+        }
+        public double Fee
+        {
+            get { return fee; }
+            set { fee = value; }
+        }
+        public string PSpot
+        {
+            get { return pSpot; }
+            set { pSpot = value; }
+        }
+        public DateTime PTime
+        {
+            get { return pTime; }
+            set { pTime = value; }
+        }
+        #endregion
     }
 }

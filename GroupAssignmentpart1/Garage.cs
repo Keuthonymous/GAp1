@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,11 @@ namespace GroupAssignmentpart1
             throw new NotImplementedException();
         }
 
-        internal T SearchByLiPlate(string LiPlate)
+        internal Vehicle SearchByLiPlate(string LiPlate)
         {
             var query = (from v in garage
-                         where v.LiPlate == LiPlate
-                         orderby v.LiPlate
+                        where v.LiPlate == LiPlate
+                        orderby v.LiPlate
                          select v).FirstOrDefault();
 
             return query;
@@ -33,6 +34,16 @@ namespace GroupAssignmentpart1
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerator<T> GetEnumerator() //Did this VV
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException(); //To this ^^
         }
 
         public IEnumerable<T> Vehicles { get; private set; }

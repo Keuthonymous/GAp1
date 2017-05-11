@@ -41,7 +41,9 @@ namespace GroupAssignmentpart1
 
         static void ConfirmExit()
         {
-            Console.WriteLine("Are you sure you want to return to menu?");
+            Console.WriteLine("Are you sure you want to return to menu?\n" +
+                              "Y) Exit" +
+                              "N) Stay");
             switch (Console.ReadKey().KeyChar)
             {
                 case 'y': break;

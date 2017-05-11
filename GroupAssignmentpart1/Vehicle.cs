@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
-    class Vehicle
+    class Vehicle : IEquatable<Vehicle>
     {
         //License plate number
         //Color
@@ -111,6 +111,13 @@ namespace GroupAssignmentpart1
             this.Fee = fee;
             this.PSpot = pSpot;
             this.PTime = pTime;
+        }
+        #endregion
+        #region Methods
+        public bool Equals(Vehicle other)
+        {
+            if (other == null) return false;
+            return (this.liPlate.Equals(other.liPlate));
         }
         #endregion
     }

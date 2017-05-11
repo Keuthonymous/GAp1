@@ -19,12 +19,31 @@ namespace GroupAssignmentpart1
             garage.Add(vehicle);
         }
 
+        /// <summary>
+        /// Allows the user to unpark a vehicle
+        /// </summary>
+        /// <param name="vehicle">Vehicle to be unparked</param>
+        /// <returns>Value of the fee, accoring to the type of vehicle and how long it has been parked</returns>
         public static double UnparkVehicle(Vehicle vehicle)
         {
             if (garage.Remove(vehicle))
                 return vehicle.Fee;
             else
                 return 0;
+        }
+
+        /// <summary>
+        /// Returns a string containing all information of all vehicles currently parked in the garage
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> Vehicles()
+        {
+            List<string> result = new List<string>();
+
+            foreach (Vehicle vehicle in garage.Vehicles)
+                result.Add(vehicle.ToString());
+
+            return result;
         }
 
         /// <summary>

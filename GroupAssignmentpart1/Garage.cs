@@ -27,5 +27,7 @@ namespace GroupAssignmentpart1
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<T> Vehicles { get; private set; }
     }
 }

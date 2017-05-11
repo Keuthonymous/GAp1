@@ -100,12 +100,25 @@ namespace GroupAssignmentpart1
 
         private static void SearchByRegistrationNumber()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please enter a valid Reg. number.");
+            string LiPlate = Console.ReadLine();
+
+            if (GarageLogic.SearchByLiPlate(LiPlate) == null)
+            {
+                Console.WriteLine("This car does not exist in this garage.");
+            }
+            else
+            {
+                Console.WriteLine(GarageLogic.SearchByLiPlate(LiPlate));
+            }
+
+            Console.ReadKey();
         }
 
         private static void SearchByVehicleType()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please enter the brand and model of car that you're searching for: ");
+
         }
 
         private static void SearchByParkingDate()

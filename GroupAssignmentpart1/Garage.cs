@@ -29,6 +29,15 @@ namespace GroupAssignmentpart1
                     select v).FirstOrDefault();
         }
 
+        internal IEnumerable<T> SearchByVehicleType(string Brand, string Model)
+        {
+            var query = from v in garage
+                        where v.Brand == Brand && v.Model == Model
+                        orderby v.LiPlate
+                        select v;
+            return query;
+        }
+
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)
         {
             throw new NotImplementedException();

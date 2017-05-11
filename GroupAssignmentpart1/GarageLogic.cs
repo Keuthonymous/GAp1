@@ -77,5 +77,21 @@ namespace GroupAssignmentpart1
         {
             return garage.SearchByParkingDate(PTime, before);
         }
+
+        /// <summary>
+        /// Allows the user to load the vehicle list from a file
+        /// </summary>
+        public static void LoadVehicles()
+        {
+            garage.Load();
+        }
+
+        /// <summary>
+        /// Allows the user to save the vehicle list into a file
+        /// </summary>
+        public static void SaveVehicles()
+        {
+            garage.Save();
+        }
     }
 }

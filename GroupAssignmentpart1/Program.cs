@@ -10,6 +10,8 @@ namespace GroupAssignmentpart1
     {
         static void Main(string[] args)
         {
+            MenuLoadVehicles();
+
             bool exit = false;
 
             Menu menu = new Menu(new Dictionary<string, string> { { "1", "View information of all vehicles in the garage."},
@@ -36,6 +38,7 @@ namespace GroupAssignmentpart1
                         MenuCheckOutVehicle();
                         break;
                     case "0":
+                        MenuSaveVehicles();
                         exit = true;
                         break;
                 }
@@ -48,6 +51,26 @@ namespace GroupAssignmentpart1
         {
             DisplayVehicles(GarageLogic.Vehicles(), "Vehicles currently parked in the garage:");
         }
+
+        #region Import/export management
+
+        private static void MenuLoadVehicles()
+        {
+            if (new Menu(new Dictionary<string, string> { { "Y", "Yes." },
+                                                          { "N", "No." } },
+                         "Would you want to load the vehicle list from your previous session?").Show().ToUpper() == "Y")
+                GarageLogic.LoadVehicles();
+        }
+
+        private static void MenuSaveVehicles()
+        {
+            if (new Menu(new Dictionary<string, string> { { "Y", "Yes." },
+                                                          { "N", "No." } },
+                         "Do you want to save the vehicle list before you quit?").Show().ToUpper() == "Y")
+                GarageLogic.SaveVehicles();
+        }
+
+        #endregion
 
         #region Searching for vehicles
 

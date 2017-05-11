@@ -26,6 +26,13 @@ namespace GroupAssignmentpart1
         private string brand;
         private string model;
         private string engineType;
+        private int numOfWheels;
+        private string fuelType;
+        private string transmition;
+        private int numOfDoors;
+        private double fee;
+        private string pSpot;
+        private DateTime pTime;
         #endregion
     }
 }

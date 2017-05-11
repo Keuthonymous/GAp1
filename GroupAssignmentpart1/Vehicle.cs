@@ -8,5 +8,14 @@ namespace GroupAssignmentpart1
 {
     class Vehicle
     {
+        //License plate number
+        //Color
+        //Brand/model
+        //Engine type
+        //Amount of Wheels
+        //Fuel type
+        //Transmition
+        //Amount of doors
+        //fee
     }
 }

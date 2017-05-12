@@ -8,6 +8,10 @@ namespace GroupAssignmentpart1
 {
     class Motorcycle : Vehicle
     {
+        public Motorcycle()
+        {
+        }
+
         public Motorcycle(string registrationPlate,
                           string color,
                           string brand,

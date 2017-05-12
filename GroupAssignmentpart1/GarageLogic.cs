@@ -134,6 +134,8 @@ namespace GroupAssignmentpart1
             LoadCars();
             LoadBusses();
             LoadTrucks();
+
+            garage.Modified = false;
         }
 
         private static void LoadMotorcycles()

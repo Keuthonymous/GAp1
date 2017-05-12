@@ -8,6 +8,10 @@ namespace GroupAssignmentpart1
 {
     class Bus : Vehicle
     {
+        public Bus()
+        {
+        }
+
         public Bus(string registrationPlate,
                    string color,
                    string brand,

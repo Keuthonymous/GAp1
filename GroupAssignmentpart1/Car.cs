@@ -4,6 +4,10 @@ namespace GroupAssignmentpart1
 {
     class Car:Vehicle
     {
+        public Car()
+        {
+        }
+
         public Car(string registrationPlate,
                    string color,
                    string brand,

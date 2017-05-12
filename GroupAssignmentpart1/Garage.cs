@@ -46,7 +46,7 @@ namespace GroupAssignmentpart1
         internal bool Modified
         {
             get { return modified; }
-            private set { }
+            set { modified = value; }
         }
 
         /// <summary>

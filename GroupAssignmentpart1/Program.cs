@@ -160,13 +160,11 @@ namespace GroupAssignmentpart1
 
         private static void SearchByBrandAndModel()
         {
-            Console.WriteLine("Please enter the brand and model of car that you're searching for: ");
-            string brand = GetString("brand", "vehicle", false);
-            string model = GetString("model", "vehicle", false);
+            Console.WriteLine("Please enter the brand and model of the vehicle that you're searching for: ");
+            string brand = GetString("brand", "vehicle");
+            string model = GetString("model", "vehicle");
 
-            DisplayVehicles(GarageLogic.SearchByBrandAndModel(brand, model), "result");
-            Console.ReadKey();
-
+            DisplayVehicles(GarageLogic.SearchByBrandAndModel(brand, model), "The following vehicles have been found:");
         }
 
         private static void SearchByParkingDate()
@@ -441,7 +439,7 @@ namespace GroupAssignmentpart1
         {
             string input = string.Empty;
             string canLetBlank = string.Empty;
-            bool inputOK = true;
+            bool inputOK = false;
 
             if (allowBlank)
                 canLetBlank = " (just press 'Enter' if you want to let it blank)";
@@ -455,9 +453,10 @@ namespace GroupAssignmentpart1
                 if (input.Length == 0 && !allowBlank)
                 {
                     Console.WriteLine("The value you entered is incorrect!");
-                    inputOK = false;
                     Console.ReadKey();
                 }
+                else
+                    inputOK = true;
             }
             while (!inputOK);
 

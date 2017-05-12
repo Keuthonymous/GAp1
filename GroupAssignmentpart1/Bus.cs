@@ -8,8 +8,11 @@ namespace GroupAssignmentpart1
 {
     class Bus : Vehicle
     {
-        public Bus(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition)
-            : base(liPlate, color, brand, model, engineType, 6, fuelType, transmition, 2, 30)
+        public Bus(string registrationPlate,
+                   string color,
+                   string brand,
+                   string model)
+            : base(registrationPlate, color, brand, model, 6, 2, 30)
         {
         }
 

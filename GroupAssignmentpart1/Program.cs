@@ -59,16 +59,17 @@ namespace GroupAssignmentpart1
         {
             if (new Menu(new Dictionary<string, string> { { "Y", "Yes." },
                                                           { "N", "No." } },
-                         "Would you want to load the vehicle list from your previous session?").Show().ToUpper() == "Y")
-                GarageLogic.LoadVehicles();
+                         new List<string> { "Would you want to load the vehicle list",
+                                            "from your previous session?" }).Show().ToUpper() == "Y")
+                GarageLogic.Load();
         }
 
         private static void MenuSaveVehicles()
         {
-            if (new Menu(new Dictionary<string, string> { { "Y", "Yes." },
-                                                          { "N", "No." } },
-                         "Do you want to save the vehicle list before you quit?").Show().ToUpper() == "Y")
-                GarageLogic.SaveVehicles();
+            if (GarageLogic.GarageModified() && new Menu(new Dictionary<string, string> { { "Y", "Yes." },
+                                                                                          { "N", "No." } },
+                                                         "Do you want to save the vehicle list before you quit?").Show().ToUpper() == "Y")
+                GarageLogic.Save();
         }
 
         #endregion
@@ -81,7 +82,8 @@ namespace GroupAssignmentpart1
 
             Menu menu = new Menu(new Dictionary<string, string> { { "1", "Registration number." },
                                                                   { "2", "Type of vehicle." },
-                                                                  { "3", "Parking date."},
+                                                                  { "3", "Brand and model." },
+                                                                  { "4", "Parking date."},
                                                                   { "0", "Exit."} },
                                  "Do you want to search by:");
 
@@ -96,6 +98,9 @@ namespace GroupAssignmentpart1
                         SearchByVehicleType();
                         break;
                     case "3":
+                        SearchByBrandAndModel();
+                        break;
+                    case "4":
                         SearchByParkingDate();
                         break;
                     default:
@@ -109,20 +114,33 @@ namespace GroupAssignmentpart1
         private static void SearchByRegistrationNumber()
         {
             Console.WriteLine("Please enter a valid Reg. number.");
-            string LiPlate = Console.ReadLine();
+            string registrationPlate = Console.ReadLine();
 
-            if (GarageLogic.SearchByLiPlate(LiPlate) == null)
+            if (GarageLogic.SearchByRegistrationPlate(registrationPlate) == null)
             {
                 Console.WriteLine("This car does not exist in this garage.");
             }
             else
             {
-                Console.WriteLine(GarageLogic.SearchByLiPlate(LiPlate));
+                Console.WriteLine(GarageLogic.SearchByRegistrationPlate(registrationPlate));
             }
             Console.ReadKey();
         }
 
         private static void SearchByVehicleType()
+        {
+            bool exit = false;
+
+            Dictionary<string, string> menuItems = new Dictionary<string, string>();
+
+            do
+            {
+
+            }
+            while (!exit);
+        }
+
+        private static void SearchByBrandAndModel()
         {
             Console.WriteLine("Please enter the brand and model of car that you're searching for: ");
             string brand = GetString("brand", "vehicle", false);
@@ -193,18 +211,14 @@ namespace GroupAssignmentpart1
         {
             string vehicleName = "motorcycle";
 
-            string liPlate = GetString("registration plate", vehicleName, false);
+            string registrationPlate = GetRegistrationPlate(vehicleName);
             string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
-            string engineType = GetString("engine type", vehicleName);
-            string fuelType = GetString("fuel type", vehicleName);
-            string transmition = GetString("transmition", vehicleName);
 
-            Motorcycle motorcycle = new Motorcycle(liPlate, color, brand, model, engineType, fuelType, transmition);
+            Motorcycle motorcycle = new Motorcycle(registrationPlate, color, brand, model);
 
             int parkingPlace = GarageLogic.ParkVehicle(motorcycle);
-
             Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
         }
 
@@ -212,19 +226,15 @@ namespace GroupAssignmentpart1
         {
             string vehicleName = "car";
 
-            string liPlate = GetString("registration plate", vehicleName, false);
+            string registrationPlate = GetRegistrationPlate(vehicleName);
             string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
-            string engineType = GetString("engine type", vehicleName);
-            string fuelType = GetString("fuel type", vehicleName);
-            string transmition = GetString("transmition", vehicleName);
             int numOfDoors = GetInteger("number of doors", vehicleName);
 
-            Car car = new Car(liPlate, color, brand, model, engineType, fuelType, transmition, numOfDoors);
+            Car car = new Car(registrationPlate, color, brand, model, numOfDoors);
 
             int parkingPlace = GarageLogic.ParkVehicle(car);
-
             Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
         }
 
@@ -232,18 +242,14 @@ namespace GroupAssignmentpart1
         {
             string vehicleName = "bus";
 
-            string liPlate = GetString("registration plate", vehicleName, false);
+            string registrationPlate = GetRegistrationPlate(vehicleName);
             string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
-            string engineType = GetString("engine type", vehicleName);
-            string fuelType = GetString("fuel type", vehicleName);
-            string transmition = GetString("transmition", vehicleName);
 
-            Bus bus = new Bus(liPlate, color, brand, model, engineType, fuelType, transmition);
+            Bus bus = new Bus(registrationPlate, color, brand, model);
 
             int parkingPlace = GarageLogic.ParkVehicle(bus);
-
             Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
         }
 
@@ -251,69 +257,16 @@ namespace GroupAssignmentpart1
         {
             string vehicleName = "truck";
 
-            string liPlate = GetString("registration plate", vehicleName, false);
+            string registrationPlate = GetRegistrationPlate(vehicleName);
             string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
-            string engineType = GetString("engine type", vehicleName);
-            int numOfWheels = GetInteger("number of wheels", vehicleName);
-            string fuelType = GetString("fuel type", vehicleName);
-            string transmition = GetString("transmition", vehicleName);
+            int numberOfWheels = GetInteger("number of wheels", vehicleName);
 
-            Truck truck = new Truck(liPlate, color, brand, model, engineType, numOfWheels, fuelType, transmition);
+            Truck truck = new Truck(registrationPlate, color, brand, model, numberOfWheels);
 
             int parkingPlace = GarageLogic.ParkVehicle(truck);
-
             Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
-        }
-
-        private static string GetString(string stringName, string vehicleName, bool allowBlank = true)
-        {
-            string input = string.Empty;
-            string canLetBlank = string.Empty;
-            bool inputOK = true;
-
-            if (allowBlank)
-                canLetBlank = " (just press 'Enter' if you want to let it blank)";
-
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Please enter the {0} of the {1}{2}:", stringName, vehicleName, canLetBlank);
-                input = Console.ReadLine();
-
-                if (input.Length == 0 && !allowBlank)
-                {
-                    Console.WriteLine("The value you entered is incorrect!");
-                    inputOK = false;
-                }
-            }
-            while (!inputOK);
-
-            return input;
-        }
-
-        private static int GetInteger(string integerName, string vehicleName)
-        {
-            string input = string.Empty;
-            int result = 0;
-
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Please enter the {0} of the {1}:", integerName, vehicleName);
-                input = Console.ReadLine();
-
-                if (!int.TryParse(input, out result))
-                {
-                    Console.WriteLine("The value you entered is incorrect!");
-                    input = string.Empty;
-                    Console.ReadKey();
-                }
-            }
-            while (input.Length == 0);
-
-            return result;
         }
 
         #endregion
@@ -341,16 +294,22 @@ namespace GroupAssignmentpart1
                 menuItems.Add("-1", string.Empty);
                 menuItems.Add("0", "Exit.");
 
-                string input = new Menu(menuItems, "Vehicles currently parked in the garage:").Show();
+                string input = new Menu(menuItems, "Vehicles currently parked in the garage:", GetColumnNames()).Show();
 
                 if (input == "0")
                     exit = true;
-                else if (ConfirmCheckOut())
+                else
                 {
                     Vehicle vehicle = vehicles[input];
-                    double fee = GarageLogic.UnparkVehicle(vehicle);
-                    Console.WriteLine("The vehicle has been parked since {0}, which gives a fee of {1:N2}", vehicle.PTime.ToString(), vehicle.Fee);
-                    Console.ReadKey();
+                    if (ConfirmCheckOut(vehicle))
+                    {
+                        double totalPrice = GarageLogic.UnparkVehicle(vehicle);
+                        Console.WriteLine("The vehicle has been parked since {0} with a fee of {1},\nwhich gives a total of {2:N2}",
+                                          vehicle.ParkingTime.ToString(),
+                                          vehicle.Fee,
+                                          totalPrice);
+                        Console.ReadKey();
+                    }
                 }
             }
             while (!exit);
@@ -358,11 +317,14 @@ namespace GroupAssignmentpart1
 
         #endregion
 
-        private static bool ConfirmCheckOut()
+        private static bool ConfirmCheckOut(Vehicle vehicle)
         {
-            return (new Menu(new Dictionary<string, string> { { "Y", "Yes." }, 
+            return (new Menu(new Dictionary<string, string> { { "-1", vehicle.ToString() },
+                                                              {"-2", string.Empty },
+                                                              { "Y", "Yes." }, 
                                                               { "N", "No." } },
-                             "Do you really want to check out the chosen vehicle?")
+                             "Do you really want to check out the chosen vehicle?",
+                             GetColumnNames())
                              .Show()
                              .ToUpper() == "Y");
         }
@@ -385,16 +347,22 @@ namespace GroupAssignmentpart1
             menuItems.Add(noVehicle.ToString(), string.Empty);
             menuItems.Add("0", "Exit.");
 
-            new Menu(menuItems, title, new List<string> { "color",
-                                "brand",
-                                "model",
-                                "reg. plate",
-                                "engine type",
-                                "transmition",
-                                "number of doors",
-                                "fuel type",
-                                "time parked"}).Show();
+            new Menu(menuItems, title, GetColumnNames()).Show();
         }
+
+        #region Get methods
+
+        private static List<string> GetColumnNames()
+        {
+            return new List<string> { "Reg. plate",
+                                      "Brand",
+                                      "Model",
+                                      "Color",
+                                      "Doors",
+                                      "Wheels",
+                                      "Time parked" };
+        }
+
         private static DateTime GetDateTime(string timeInput)
         {
             string Format = "dd/MM/yyyy HH:mm";
@@ -406,5 +374,76 @@ namespace GroupAssignmentpart1
 
             return dateTime;
         }
+
+        private static int GetInteger(string integerName, string vehicleName)
+        {
+            string input = string.Empty;
+            int result = 0;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter the {0} of the {1}:", integerName, vehicleName);
+                input = Console.ReadLine();
+
+                if (!int.TryParse(input, out result))
+                {
+                    Console.WriteLine("The value you entered is incorrect!");
+                    input = string.Empty;
+                    Console.ReadKey();
+                }
+            }
+            while (input.Length == 0);
+
+            return result;
+        }
+
+        private static string GetString(string stringName, string vehicleName, bool allowBlank = true)
+        {
+            string input = string.Empty;
+            string canLetBlank = string.Empty;
+            bool inputOK = true;
+
+            if (allowBlank)
+                canLetBlank = " (just press 'Enter' if you want to let it blank)";
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter the {0} of the {1}{2}:", stringName, vehicleName, canLetBlank);
+                input = Console.ReadLine();
+
+                if (input.Length == 0 && !allowBlank)
+                {
+                    Console.WriteLine("The value you entered is incorrect!");
+                    inputOK = false;
+                    Console.ReadKey();
+                }
+            }
+            while (!inputOK);
+
+            return input;
+        }
+
+        private static string GetRegistrationPlate(string vehicleName)
+        {
+            string input = string.Empty;
+
+            do
+            {
+                input = GetString("registration plate", vehicleName, false);
+                if (GarageLogic.SearchByRegistrationPlate(input) != null)
+                {
+                    Console.WriteLine("A vehicle with the same registration plate is already parked in the garage.");
+                    Console.ReadKey();
+                    input = string.Empty;
+                }
+            }
+            while (input.Length == 0);
+
+            return input.ToUpper();
+        }
+
+        #endregion
     }
 }

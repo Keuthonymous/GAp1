@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
-using System.Xml.Linq;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace GroupAssignmentpart1
 {
@@ -13,33 +9,64 @@ namespace GroupAssignmentpart1
     {
         private List<T> garage = new List<T>();
         private int availablePlace = 0;
+        private bool modified = false;
 
-        internal void Add(T vehicle)
+        /// <summary>
+        /// Adds a new "T" in the garage and checks that the registration plate doesn't already exists
+        /// </summary>
+        /// <param name="t">"T" that has to be added to the garage</param>
+        internal void Add(T t)
         {
-            garage.Add(vehicle);
-            vehicle.PTime = DateTime.Now;
-            vehicle.PSpot = garage.ToList().IndexOf(vehicle);
+            garage.Add(t);
+
+            t.ParkingTime = DateTime.Now;
+            t.ParkingSpot = availablePlace;
+
             availablePlace += 1;
+
+            modified = true;
         }
 
-        internal bool Remove(T vehicle)
+        /// <summary>
+        /// Removes a "T" from the garage
+        /// </summary>
+        /// <param name="t">"T" to be removed</param>
+        /// <returns>True if t was already in the garage, false otherwise</returns>
+        internal bool Remove(T t)
         {
-            return garage.Remove(vehicle);
+            if (garage.Remove(t))
+            {
+                modified = true;
+                return true;
+            }
+            else
+                return false;
         }
 
-        internal T SearchByLiPlate(string liPlate)
+        internal bool Modified
         {
-            return (from v in garage
-                    where v.LiPlate == liPlate
-                    orderby v.LiPlate
+            get { return modified; }
+            private set { }
+        }
+
+        /// <summary>
+        /// Searches a "T" in the garage, according to its registration plate
+        /// </summary>
+        /// <param name="registrationPlate"></param>
+        /// <returns></returns>
+        internal T SearchByRegistrationPlate(string registrationPlate)
+        {
+            return (from v in Vehicles
+                    where v.RegistrationPlate == registrationPlate
+                    orderby v.RegistrationPlate
                     select v).FirstOrDefault();
         }
 
         internal IEnumerable<T> SearchByVehicleType(string brand, string model)
         {
-            var query = from v in garage
+            var query = from v in Vehicles
                         where string.Compare(v.Brand, brand, true) == 0 && string.Compare(v.Model, model, true) == 0
-                        orderby v.LiPlate
+                        orderby v.RegistrationPlate
                         select v;
             return query;
         }
@@ -47,14 +74,14 @@ namespace GroupAssignmentpart1
         internal IEnumerable<T> SearchByParkingDate(DateTime date, bool before)
         {
             if (before)
-                return garage.Where(t => t.PTime <= date);
+                return Vehicles.Where(t => t.ParkingTime <= date);
             else
-                return garage.Where(t => t.PTime >= date);
+                return Vehicles.Where(t => t.ParkingTime >= date);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return garage.GetEnumerator();
+            return Vehicles.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -64,50 +91,8 @@ namespace GroupAssignmentpart1
 
         public List<T> Vehicles
         {
-            get { return garage; }
+            get { return garage.ToList(); }
             private set { }
         }
-
-        #region Serialization management
-
-        private string SerializationPath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Vehicles.xml");
-        }
-
-        public void Save()
-        {
-            XElement root = new XElement("Root");
-            foreach (T t in garage)
-            {
-                root.Add(t.Serialize());
-            }
-
-            XDocument doc = new XDocument(root);
-            doc.Save(SerializationPath());
-        }
-
-        public void Load()
-        {
-            // Checking that the xml file currently exists
-            string strPath = SerializationPath();
-
-            if (!File.Exists(strPath))
-                return;
-
-            XElement elements = XElement.Load(strPath);
-            IEnumerable<XElement> childElements =
-                from el in elements.Elements()
-                select el;
-            foreach (XElement el in elements.Elements())
-            {
-                T t = (T)Activator.CreateInstance(typeof(T));
-                t.Deserialize(el);
-                garage.Add(t);
-                Console.WriteLine("Name: " + el.Name);
-            }
-        }
-
-        #endregion
     }
 }

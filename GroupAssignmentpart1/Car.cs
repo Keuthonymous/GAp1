@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
     class Car:Vehicle
     {
-        public Car(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition, int numOfDoors)
-            : base( liPlate, color, brand, model, engineType, 4, fuelType, transmition, numOfDoors, 20)
+        public Car(string registrationPlate,
+                   string color,
+                   string brand,
+                   string model,
+                   int numOfDoors)
+            : base( registrationPlate, color, brand, model, 4, numOfDoors, 20)
         {
 
         }

@@ -131,7 +131,8 @@ namespace GroupAssignmentpart1
                                               thisTI.ToTitleCase(color),
                                               numOfDoors.ToString(),
                                               numberOfWheels.ToString(),
-                                              parkingTime.ToString() });
+                                              parkingTime.ToString(),
+                                              parkingSpot.ToString() });
         }
 
         public bool Equals(Vehicle other)

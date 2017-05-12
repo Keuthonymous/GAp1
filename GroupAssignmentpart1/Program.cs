@@ -132,10 +132,29 @@ namespace GroupAssignmentpart1
             bool exit = false;
 
             Dictionary<string, string> menuItems = new Dictionary<string, string>();
+            Dictionary<string, Type> types = new Dictionary<string, Type>();
+
+            int noType = 1;
+            foreach (Type t in typeof(Vehicle).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Vehicle))))
+            {
+                menuItems.Add(noType.ToString(), t.ToString() + ".");
+                types.Add(noType.ToString(), t);
+
+                noType += 1;
+            }
+
+            menuItems.Add("-1", string.Empty);
+            menuItems.Add("0", "Exit.");
+
+            Menu menu = new Menu(menuItems, "Please select the type of vehicle you want to list:");
 
             do
             {
-
+                string input=menu.Show();
+                if (input == "0")
+                    exit = true;
+                else
+                    DisplayVehicles(GarageLogic.SearchByVehicleType(types[input]), "List of the found vehicles:");
             }
             while (!exit);
         }
@@ -146,7 +165,7 @@ namespace GroupAssignmentpart1
             string brand = GetString("brand", "vehicle", false);
             string model = GetString("model", "vehicle", false);
 
-            DisplayVehicles(GarageLogic.SearchByVehicleType(brand, model), "result");
+            DisplayVehicles(GarageLogic.SearchByBrandAndModel(brand, model), "result");
             Console.ReadKey();
 
         }

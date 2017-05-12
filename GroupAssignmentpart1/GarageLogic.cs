@@ -64,15 +64,20 @@ namespace GroupAssignmentpart1
             return garage.SearchByRegistrationPlate(registrationPlate);
         }
 
+        public static IEnumerable<Vehicle> SearchByVehicleType(Type type)
+        {
+            return garage.SearchByVehileType(type);
+        }
+
         /// <summary>
         /// Allows the user to search for vehicles in the garage by brand and model.
         /// </summary>
         /// <param name="<brand">brand of the vehicle</param>
         /// <param name="model">model of the vehicle</param>
         /// <returns></returns>
-        public static IEnumerable<Vehicle> SearchByVehicleType(string brand, string model)
+        public static IEnumerable<Vehicle> SearchByBrandAndModel(string brand, string model)
         {
-            return garage.SearchByVehicleType(brand, model);
+            return garage.SearchByBrandAndModel(brand, model);
         }
 
         /// <summary>
@@ -125,8 +130,16 @@ namespace GroupAssignmentpart1
 
         public static void Load()
         {
+            LoadMotorcycles();
+            LoadCars();
+            LoadBusses();
+            LoadTrucks();
+        }
+
+        private static void LoadMotorcycles()
+        {
             // Checking that the xml file currently exists
-            string strPath = SerializationPath();
+            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Motorcycles.xml");
 
             if (!File.Exists(strPath))
                 return;
@@ -135,7 +148,61 @@ namespace GroupAssignmentpart1
 
             foreach (XElement el in elements.Elements())
             {
-                Vehicle vehicle = (Vehicle)Activator.CreateInstance(typeof(Vehicle));
+                Motorcycle vehicle = (Motorcycle)Activator.CreateInstance(typeof(Motorcycle));
+                vehicle.Deserialize(el);
+                garage.Add(vehicle);
+            }
+        }
+
+        private static void LoadCars()
+        {
+            // Checking that the xml file currently exists
+            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Cars.xml");
+
+            if (!File.Exists(strPath))
+                return;
+
+            XElement elements = XElement.Load(strPath);
+
+            foreach (XElement el in elements.Elements())
+            {
+                Car vehicle = (Car)Activator.CreateInstance(typeof(Car));
+                vehicle.Deserialize(el);
+                garage.Add(vehicle);
+            }
+        }
+
+        private static void LoadBusses()
+        {
+            // Checking that the xml file currently exists
+            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Busses.xml");
+
+            if (!File.Exists(strPath))
+                return;
+
+            XElement elements = XElement.Load(strPath);
+
+            foreach (XElement el in elements.Elements())
+            {
+                Bus vehicle = (Bus)Activator.CreateInstance(typeof(Bus));
+                vehicle.Deserialize(el);
+                garage.Add(vehicle);
+            }
+        }
+
+        private static void LoadTrucks()
+        {
+            // Checking that the xml file currently exists
+            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Trucks.xml");
+
+            if (!File.Exists(strPath))
+                return;
+
+            XElement elements = XElement.Load(strPath);
+
+            foreach (XElement el in elements.Elements())
+            {
+                Truck vehicle = (Truck)Activator.CreateInstance(typeof(Truck));
                 vehicle.Deserialize(el);
                 garage.Add(vehicle);
             }

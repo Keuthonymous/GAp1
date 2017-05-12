@@ -57,12 +57,17 @@ namespace GroupAssignmentpart1
         internal T SearchByRegistrationPlate(string registrationPlate)
         {
             return (from v in Vehicles
-                    where v.RegistrationPlate == registrationPlate
+                    where string.Compare(v.RegistrationPlate, registrationPlate, true) == 0
                     orderby v.RegistrationPlate
                     select v).FirstOrDefault();
         }
 
-        internal IEnumerable<T> SearchByVehicleType(string brand, string model)
+        internal IEnumerable<T> SearchByVehileType(Type type)
+        {
+            return Vehicles.Where(t => t.GetType() == type);
+        }
+
+        internal IEnumerable<T> SearchByBrandAndModel(string brand, string model)
         {
             var query = from v in Vehicles
                         where string.Compare(v.Brand, brand, true) == 0 && string.Compare(v.Model, model, true) == 0

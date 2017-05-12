@@ -152,13 +152,13 @@ namespace GroupAssignmentpart1
                 new XElement("NumberOfWheels", numberOfWheels.ToString()),
                 new XElement("NumberOfDoors", numOfDoors.ToString()),
                 new XElement("Fee", fee.ToString()),
-                new XElement("ParkingTime",
+//                new XElement("ParkingTime",
                     new XElement("Year", parkingTime.Year),
                     new XElement("Month", parkingTime.Month),
                     new XElement("Day", parkingTime.Day),
                     new XElement("Hours", parkingTime.Hour),
                     new XElement("Minutes", parkingTime.Hour),
-                    new XElement("Seconds", parkingTime.Hour)));
+                    new XElement("Seconds", parkingTime.Hour));//);
 
             return element;
         }
@@ -174,7 +174,7 @@ namespace GroupAssignmentpart1
             numOfDoors = 0;
             int.TryParse((string)element.Element("NumberOfDoors"), out numOfDoors);
             fee = (double)element.Element("Fee");
-            element = element.Element("ParkingTime");
+//element = element.Element("ParkingTime");
             parkingTime = new DateTime(int.Parse((string)element.Element("Year")),
                                        int.Parse((string)element.Element("Month")),
                                        int.Parse((string)element.Element("Day")),

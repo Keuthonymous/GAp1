@@ -230,9 +230,9 @@ namespace GroupAssignmentpart1
             string vehicleName = "motorcycle";
 
             string registrationPlate = GetRegistrationPlate(vehicleName);
-            string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
+            string color = GetString("color", vehicleName);
 
             Motorcycle motorcycle = new Motorcycle(registrationPlate, color, brand, model);
 
@@ -245,9 +245,9 @@ namespace GroupAssignmentpart1
             string vehicleName = "car";
 
             string registrationPlate = GetRegistrationPlate(vehicleName);
-            string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
+            string color = GetString("color", vehicleName);
             int numOfDoors = GetInteger("number of doors", vehicleName);
 
             Car car = new Car(registrationPlate, color, brand, model, numOfDoors);
@@ -261,9 +261,9 @@ namespace GroupAssignmentpart1
             string vehicleName = "bus";
 
             string registrationPlate = GetRegistrationPlate(vehicleName);
-            string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
+            string color = GetString("color", vehicleName);
 
             Bus bus = new Bus(registrationPlate, color, brand, model);
 
@@ -276,9 +276,9 @@ namespace GroupAssignmentpart1
             string vehicleName = "truck";
 
             string registrationPlate = GetRegistrationPlate(vehicleName);
-            string color = GetString("color", vehicleName);
             string brand = GetString("brand", vehicleName);
             string model = GetString("model", vehicleName);
+            string color = GetString("color", vehicleName);
             int numberOfWheels = GetInteger("number of wheels", vehicleName);
 
             Truck truck = new Truck(registrationPlate, color, brand, model, numberOfWheels);

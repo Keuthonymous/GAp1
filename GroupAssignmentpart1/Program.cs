@@ -153,7 +153,7 @@ namespace GroupAssignmentpart1
                 if (input == "0")
                     exit = true;
                 else
-                    DisplayVehicles(GarageLogic.SearchByVehicleType(types[input]), "List of the found vehicles:");
+                    DisplayVehicles(GarageLogic.SearchByVehicleType(types[input]), "The following vehicles have been found:");
             }
             while (!exit);
         }
@@ -169,7 +169,6 @@ namespace GroupAssignmentpart1
 
         private static void SearchByParkingDate()
         {
-            Console.Clear();
             Console.WriteLine("Please enter the time that your car was parked:");
 
             string timeInput = "";

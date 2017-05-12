@@ -169,20 +169,17 @@ namespace GroupAssignmentpart1
 
         private static void SearchByParkingDate()
         {
-            Console.WriteLine("Please enter the time that your car was parked");
+            Console.Clear();
+            Console.WriteLine("Please enter the time that your car was parked:");
 
             string timeInput = "";
-            DateTime PTime = GetDateTime(timeInput);
-            DateTime now = DateTime.Now.Date;
-            if (PTime < now)
-            {
-                bool before = true;
-                while (before == true)
-                {
-                    Console.WriteLine(GarageLogic.SearchByParkingDate(PTime, before));
-                    Console.ReadKey();
-                }
-            }
+            DateTime pTime = GetDateTime(timeInput);
+
+            bool before = new Menu(new Dictionary<string, string> { { "1", "Before the entered time." },
+                                                                    { "2", "After the entered time." } },
+                                   "Should the vehicles be parked:").Show() == "1";
+
+            DisplayVehicles(GarageLogic.SearchByParkingDate(pTime, before), "The following vehicles have been found:");
         }
 
         #endregion

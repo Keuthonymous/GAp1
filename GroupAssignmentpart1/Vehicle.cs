@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Globalization;
 
 namespace GroupAssignmentpart1
 {
@@ -28,10 +33,11 @@ namespace GroupAssignmentpart1
         private int parkingSpot;
         private DateTime parkingTime;
 
+        TextInfo thisTI = new CultureInfo("en-US", false).TextInfo;
         #endregion
-
+        
         #region PublicProperties
-
+        
         public string RegistrationPlate
         {
             get { return registrationPlate; }
@@ -43,43 +49,43 @@ namespace GroupAssignmentpart1
             get { return color; }
             set { color = value; }
         }
-
+        
         public string Brand
         {
             get { return brand; }
             set { brand = value; }
         }
-
+        
         public string Model
         {
             get { return model; }
             set { model = value; }
         }
-
+        
         public int NumberOfWheels
         {
             get { return numberOfWheels; }
             set { numberOfWheels = value; }
         }
-
+        
         public int NumberOfDoors
         {
             get { return numOfDoors; }
             set { numOfDoors = value; }
         }
-
+        
         public double Fee
         {
             get { return fee; }
             set { fee = value; }
         }
-
+        
         public int ParkingSpot
         {
             get { return parkingSpot; }
             set { parkingSpot = value; }
         }
-
+        
         public DateTime ParkingTime
         {
             get { return parkingTime; }
@@ -87,9 +93,9 @@ namespace GroupAssignmentpart1
         }
 
         #endregion
-
+        
         #region Constructor
-
+        
         public Vehicle()
         {
         }
@@ -118,13 +124,13 @@ namespace GroupAssignmentpart1
         public override string ToString()
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
-                               new string[] { registrationPlate,
-                                              brand,
-                                              model,
-                                              color,
-                                              numOfDoors.ToString(),
-                                              numberOfWheels.ToString(),
-                                              parkingTime.ToString() });
+                                new string[]{thisTI.ToTitleCase(color),
+                                             thisTI.ToTitleCase(brand),
+                                             thisTI.ToTitleCase(model),
+                                             registrationPlate.ToUpper(),
+                                             numOfDoors.ToString(),
+                                             numberOfWheels.ToString(),
+                                             parkingTime.ToString() });
         }
 
         public bool Equals(Vehicle other)
@@ -182,7 +188,7 @@ namespace GroupAssignmentpart1
                                        int.Parse((string)element.Element("Minutes")),
                                        int.Parse((string)element.Element("Seconds")));
         }
-
+        
         #endregion
     }
 }

@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Globalization;
 
 namespace GroupAssignmentpart1
 {
@@ -27,6 +33,8 @@ namespace GroupAssignmentpart1
         private double fee;
         private int parkingSpot;
         private DateTime parkingTime;
+
+        TextInfo thisTI = new CultureInfo("en-US", false).TextInfo;
 
         #endregion
 
@@ -119,8 +127,8 @@ namespace GroupAssignmentpart1
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
                                new string[] { registrationPlate,
-                                              brand,
-                                              model,
+                                              thisTI.ToTitleCase(brand),
+                                              thisTI.ToTitleCase(model),
                                               color,
                                               numOfDoors.ToString(),
                                               numberOfWheels.ToString(),

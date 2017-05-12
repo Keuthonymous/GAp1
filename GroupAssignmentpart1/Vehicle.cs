@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace GroupAssignmentpart1
 {
@@ -34,6 +35,7 @@ namespace GroupAssignmentpart1
         private int pSpot;
         private DateTime pTime;
 
+        TextInfo thisTI = new CultureInfo("en-US", false).TextInfo;
         #endregion
         
         #region PublicProperties
@@ -135,8 +137,8 @@ namespace GroupAssignmentpart1
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
                                 new string[]{color,
-                                brand,
-                                model,
+                                thisTI.ToTitleCase(brand),
+                                thisTI.ToTitleCase(model),
                                 liPlate,
                                 engineType,
                                 transmition,

@@ -137,13 +137,12 @@ namespace GroupAssignmentpart1
             int noType = 1;
             foreach (Type t in typeof(Vehicle).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Vehicle))))
             {
-                menuItems.Add(noType.ToString(), t.ToString() + ".");
+                menuItems.Add(noType.ToString(), t.Name + ".");
                 types.Add(noType.ToString(), t);
 
                 noType += 1;
             }
 
-            menuItems.Add("-1", string.Empty);
             menuItems.Add("0", "Exit.");
 
             Menu menu = new Menu(menuItems, "Please select the type of vehicle you want to list:");
@@ -373,7 +372,8 @@ namespace GroupAssignmentpart1
 
         private static List<string> GetColumnNames()
         {
-            return new List<string> { "Reg. plate",
+            return new List<string> { "Type",
+                                      "Reg. plate",
                                       "Brand",
                                       "Model",
                                       "Color",

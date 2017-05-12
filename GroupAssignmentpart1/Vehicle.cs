@@ -124,7 +124,8 @@ namespace GroupAssignmentpart1
         public override string ToString()
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
-                                new string[]{ thisTI.ToTitleCase(color),
+                                new string[]{ this.GetType().Name,
+                                              thisTI.ToTitleCase(color),
                                               thisTI.ToTitleCase(brand),
                                               thisTI.ToTitleCase(model),
                                               registrationPlate.ToUpper(),

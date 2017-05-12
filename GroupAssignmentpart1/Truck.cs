@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
-    class Truck:Vehicle
+    class Truck : Vehicle
     {
-        public Truck(string liPlate, string color, string brand, string model, string engineType,int numOfWheels, string fuelType, string transmition)
-            : base( liPlate, color, brand, model, engineType, numOfWheels, fuelType, transmition, 2, 50)
+        public Truck(string registrationPlate,
+                     string color,
+                     string brand,
+                     string model,
+                     int numberOfWheels)
+            : base(registrationPlate, color, brand, model, numberOfWheels, 2, 50)
         {
         }
     }

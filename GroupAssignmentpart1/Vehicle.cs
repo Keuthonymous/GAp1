@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
+using System.Xml.Linq;
 
 namespace GroupAssignmentpart1
 {
@@ -22,28 +18,24 @@ namespace GroupAssignmentpart1
         //Parking time
 
         #region PrivateVariables
-        private string liPlate;
+        private string registrationPlate;
         private string color;
         private string brand;
         private string model;
-        private string engineType;
-        private int numOfWheels;
-        private string fuelType;
-        private string transmition;
+        private int numberOfWheels;
         private int numOfDoors;
         private double fee;
-        private int pSpot;
-        private DateTime pTime;
+        private int parkingSpot;
+        private DateTime parkingTime;
 
-        TextInfo thisTI = new CultureInfo("en-US", false).TextInfo;
         #endregion
-        
+
         #region PublicProperties
-        
-        public string LiPlate
+
+        public string RegistrationPlate
         {
-            get { return liPlate; }
-            set { liPlate = value; }
+            get { return registrationPlate; }
+            set { registrationPlate = value; }
         }
 
         public string Color
@@ -51,81 +43,70 @@ namespace GroupAssignmentpart1
             get { return color; }
             set { color = value; }
         }
-        
+
         public string Brand
         {
             get { return brand; }
             set { brand = value; }
         }
-        
+
         public string Model
         {
             get { return model; }
             set { model = value; }
         }
-        
-        public string EngineType
+
+        public int NumberOfWheels
         {
-            get { return engineType; }
-            set { engineType = value; }
+            get { return numberOfWheels; }
+            set { numberOfWheels = value; }
         }
-        
-        public int NumOfWheels
-        {
-            get { return numOfWheels; }
-            set { numOfWheels = value; }
-        }
-        
-        public string FuelType
-        {
-            get { return fuelType; }
-            set { fuelType = value; }
-        }
-        
-        public string Transmition
-        {
-            get { return transmition; }
-            set { transmition = value; }
-        }
-        
-        public int NumOfDoors
+
+        public int NumberOfDoors
         {
             get { return numOfDoors; }
             set { numOfDoors = value; }
         }
-        
+
         public double Fee
         {
             get { return fee; }
             set { fee = value; }
         }
-        
-        public int PSpot
+
+        public int ParkingSpot
         {
-            get { return pSpot; }
-            set { pSpot = value; }
+            get { return parkingSpot; }
+            set { parkingSpot = value; }
         }
-        
-        public DateTime PTime
+
+        public DateTime ParkingTime
         {
-            get { return pTime; }
-            set { pTime = value; }
+            get { return parkingTime; }
+            set { parkingTime = value; }
         }
 
         #endregion
-        
+
         #region Constructor
-        
-        public Vehicle(string liPlate, string color, string brand, string model, string engineType, int numOfWheels, string fuelType, string transmition, int numOfDoors, double fee)
+
+        public Vehicle()
         {
-            this.liPlate = liPlate;
+        }
+
+        public Vehicle(string registrationPlate,
+                       string color,
+                       string brand,
+                       string model,
+                       int numberOfWheels,
+                       int numOfDoors,
+                       double fee)
+        {
+            this.registrationPlate = registrationPlate;
             this.color = color;
             this.brand = brand;
             this.model = model;
-            this.engineType = engineType;
-            this.numOfWheels = numOfWheels;
-            this.fuelType = fuelType;
-            this.transmition = transmition;
+            this.numberOfWheels = numberOfWheels;
             this.numOfDoors = numOfDoors;
             this.fee = fee;
         }
@@ -133,27 +114,75 @@ namespace GroupAssignmentpart1
         #endregion
 
         #region Methods
+
         public override string ToString()
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
-                                new string[]{color,
-                                thisTI.ToTitleCase(brand),
-                                thisTI.ToTitleCase(model),
-                                liPlate,
-                                engineType,
-                                transmition,
-                                numOfDoors.ToString(),
-                                numOfWheels.ToString(),
-                                fuelType,
-                                pTime.ToString()});
+                               new string[] { registrationPlate,
+                                              brand,
+                                              model,
+                                              color,
+                                              numOfDoors.ToString(),
+                                              numberOfWheels.ToString(),
+                                              parkingTime.ToString() });
         }
 
         public bool Equals(Vehicle other)
         {
             if (other == null) return false;
-            return (this.liPlate.Equals(other.liPlate));
+            return (this.registrationPlate.Equals(other.registrationPlate));
         }
-        
+
+        public double PayCheckOut()
+        {
+            return (DateTime.Now - parkingTime).TotalMinutes * fee;
+        }
+
+        #endregion
+
+        #region Serialization management
+
+        public XElement Serialize()
+        {
+            XElement element = new XElement("Vehicle",
+                new XElement("LicencePlate", registrationPlate),
+                new XElement("Color", color),
+                new XElement("Brand", brand),
+                new XElement("Model", model),
+                new XElement("NumberOfWheels", numberOfWheels.ToString()),
+                new XElement("NumberOfDoors", numOfDoors.ToString()),
+                new XElement("Fee", fee.ToString()),
+                new XElement("ParkingTime",
+                    new XElement("Year", parkingTime.Year),
+                    new XElement("Month", parkingTime.Month),
+                    new XElement("Day", parkingTime.Day),
+                    new XElement("Hours", parkingTime.Hour),
+                    new XElement("Minutes", parkingTime.Hour),
+                    new XElement("Seconds", parkingTime.Hour)));
+
+            return element;
+        }
+
+        public void Deserialize(XElement element)
+        {
+            registrationPlate = (string)element.Element("LicencePlate");
+            color = (string)element.Element("Color");
+            brand = (string)element.Element("Brand");
+            model = (string)element.Element("Model");
+            numberOfWheels = 0;
+            int.TryParse((string)element.Element("NumberOfWheels"), out numberOfWheels);
+            numOfDoors = 0;
+            int.TryParse((string)element.Element("NumberOfDoors"), out numOfDoors);
+            fee = (double)element.Element("Fee");
+            element = element.Element("ParkingTime");
+            parkingTime = new DateTime(int.Parse((string)element.Element("Year")),
+                                       int.Parse((string)element.Element("Month")),
+                                       int.Parse((string)element.Element("Day")),
+                                       int.Parse((string)element.Element("Hours")),
+                                       int.Parse((string)element.Element("Minutes")),
+                                       int.Parse((string)element.Element("Seconds")));
+        }
+
         #endregion
     }
 }

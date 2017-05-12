@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace GroupAssignmentpart1
 {
-    class Motorcycle:Vehicle
+    class Motorcycle : Vehicle
     {
-        public Motorcycle(string liPlate, string color, string brand, string model, string engineType, string fuelType, string transmition)
-            : base( liPlate, color, brand, model, engineType, 2, fuelType, transmition, 0, 15)
+        public Motorcycle(string registrationPlate,
+                          string color,
+                          string brand,
+                          string model)
+            : base(registrationPlate, color, brand, model, 2, 0, 15)
         {
         }
     }

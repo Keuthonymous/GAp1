@@ -16,10 +16,9 @@ namespace GroupAssignmentpart1
         /// Allows the user to park a vehicle
         /// </summary>
         /// <param name="vehicle">Vehicle to be parked</param>
-        public static int ParkVehicle(Vehicle vehicle)
+        public static void CheckIn(Vehicle vehicle)
         {
-            garage.Add(vehicle);
-            return vehicle.ParkingSpot;
+            garage.CheckIn(vehicle);
         }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace GroupAssignmentpart1
         /// </summary>
         /// <param name="vehicle">Vehicle to be unparked</param>
         /// <returns>Value of the fee, accoring to the type of vehicle and how long it has been parked</returns>
-        public static double UnparkVehicle(Vehicle vehicle)
+        public static double CheckOut(Vehicle vehicle)
         {
             if (garage.Remove(vehicle))
                 return vehicle.PayCheckOut();
@@ -93,11 +92,45 @@ namespace GroupAssignmentpart1
 
         #region Serialization management
 
-        private static string SerializationPath()
+        /// <summary>
+        /// Returns the path to the default XML file in which motorcycle informations are supposed to be stored
+        /// </summary>
+        /// <returns></returns>
+        private static string SerializationPathMotorcycles()
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Vehicles.xml");
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Motorcycles.xml");
         }
 
+        /// <summary>
+        /// Returns the path to the default XML file in which car informations are supposed to be stored
+        /// </summary>
+        /// <returns></returns>
+        private static string SerializationPathCars()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Cars.xml");
+        }
+
+        /// <summary>
+        /// Returns the path to the default XML file in which bus informations are supposed to be stored
+        /// </summary>
+        /// <returns></returns>
+        private static string SerializationPathBusses()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Busses.xml");
+        }
+
+        /// <summary>
+        /// Returns the path to the default XML file in which truck informations are supposed to be stored
+        /// </summary>
+        /// <returns></returns>
+        private static string SerializationPathTrucks()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Trucks.xml");
+        }
+
+        /// <summary>
+        /// Exports all information of all vehicles into default XML files
+        /// </summary>
         public static void Save()
         {
             XElement rootMotorcycles = new XElement("Root");
@@ -116,18 +149,21 @@ namespace GroupAssignmentpart1
                     rootTrucks.Add(vehicle.Serialize());
 
             XDocument docMotorcycles = new XDocument(rootMotorcycles);
-            docMotorcycles.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Motorcycles.xml"));
+            docMotorcycles.Save(SerializationPathMotorcycles());
 
             XDocument docCars = new XDocument(rootCars);
-            docCars.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Cars.xml"));
+            docCars.Save(SerializationPathCars());
 
             XDocument docBusses = new XDocument(rootBusses);
-            docBusses.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Busses.xml"));
+            docBusses.Save(SerializationPathBusses());
 
             XDocument docTrucks = new XDocument(rootTrucks);
-            docTrucks.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Trucks.xml"));
+            docTrucks.Save(SerializationPathTrucks());
         }
 
+        /// <summary>
+        /// Loads all vehicles stored in the default XML files
+        /// </summary>
         public static void Load()
         {
             LoadMotorcycles();
@@ -138,10 +174,13 @@ namespace GroupAssignmentpart1
             garage.Modified = false;
         }
 
+        /// <summary>
+        /// Loads all motorcycle vehicles stored in the default XML file
+        /// </summary>
         private static void LoadMotorcycles()
         {
             // Checking that the xml file currently exists
-            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Motorcycles.xml");
+            string strPath = SerializationPathMotorcycles();
 
             if (!File.Exists(strPath))
                 return;
@@ -151,15 +190,18 @@ namespace GroupAssignmentpart1
             foreach (XElement el in elements.Elements())
             {
                 Motorcycle vehicle = (Motorcycle)Activator.CreateInstance(typeof(Motorcycle));
-                vehicle.Deserialize(el);
-                garage.Add(vehicle);
+                if (vehicle.Deserialize(el))
+                    garage.Add(vehicle);
             }
         }
 
+        /// <summary>
+        /// Loads all car vehicles stored in the default XML file
+        /// </summary>
         private static void LoadCars()
         {
             // Checking that the xml file currently exists
-            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Cars.xml");
+            string strPath = SerializationPathCars();
 
             if (!File.Exists(strPath))
                 return;
@@ -169,15 +211,18 @@ namespace GroupAssignmentpart1
             foreach (XElement el in elements.Elements())
             {
                 Car vehicle = (Car)Activator.CreateInstance(typeof(Car));
-                vehicle.Deserialize(el);
-                garage.Add(vehicle);
+                if (vehicle.Deserialize(el))
+                    garage.Add(vehicle);
             }
         }
 
+        /// <summary>
+        /// Loads all bus vehicles stored in the default XML file
+        /// </summary>
         private static void LoadBusses()
         {
             // Checking that the xml file currently exists
-            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Busses.xml");
+            string strPath = SerializationPathBusses();
 
             if (!File.Exists(strPath))
                 return;
@@ -187,15 +232,18 @@ namespace GroupAssignmentpart1
             foreach (XElement el in elements.Elements())
             {
                 Bus vehicle = (Bus)Activator.CreateInstance(typeof(Bus));
-                vehicle.Deserialize(el);
-                garage.Add(vehicle);
+                if (vehicle.Deserialize(el))
+                    garage.Add(vehicle);
             }
         }
 
+        /// <summary>
+        /// Loads all truck vehicles stored in the default XML file
+        /// </summary>
         private static void LoadTrucks()
         {
             // Checking that the xml file currently exists
-            string strPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Trucks.xml");
+            string strPath = SerializationPathTrucks();
 
             if (!File.Exists(strPath))
                 return;
@@ -205,8 +253,8 @@ namespace GroupAssignmentpart1
             foreach (XElement el in elements.Elements())
             {
                 Truck vehicle = (Truck)Activator.CreateInstance(typeof(Truck));
-                vehicle.Deserialize(el);
-                garage.Add(vehicle);
+                if (vehicle.Deserialize(el))
+                    garage.Add(vehicle);
             }
         }
 

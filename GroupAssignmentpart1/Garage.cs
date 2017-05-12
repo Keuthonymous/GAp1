@@ -8,7 +8,6 @@ namespace GroupAssignmentpart1
     class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private List<T> garage = new List<T>();
-        private int availablePlace = 0;
         private bool modified = false;
 
         /// <summary>
@@ -18,11 +17,6 @@ namespace GroupAssignmentpart1
         internal void Add(T t)
         {
             garage.Add(t);
-
-            t.ParkingTime = DateTime.Now;
-            t.ParkingSpot = availablePlace;
-
-            availablePlace += 1;
 
             modified = true;
         }
@@ -43,6 +37,30 @@ namespace GroupAssignmentpart1
                 return false;
         }
 
+        internal void CheckIn(T t)
+        {
+            Add(t);
+            t.ParkingTime = DateTime.Now;
+            t.ParkingSpot = AvailablePlace();
+        }
+
+        internal int AvailablePlace()
+        {
+            // Let's get the list of occupied spots, sort it ascending and from 0, look for the next available spot
+            IEnumerable<int> occupiedSpots = Vehicles.OrderBy(t => t.ParkingSpot).Select(t => t.ParkingSpot);
+            int availableSpot = 0;
+            foreach (int occupiedSpot in occupiedSpots)
+                if (occupiedSpot == availableSpot)
+                    availableSpot += 1;
+                else
+                    break;
+
+            return availableSpot;
+        }
+
+        /// <summary>
+        /// Indicates if changes occured in the garage list
+        /// </summary>
         internal bool Modified
         {
             get { return modified; }

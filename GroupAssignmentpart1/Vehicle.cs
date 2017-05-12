@@ -23,6 +23,7 @@ namespace GroupAssignmentpart1
         //Parking time
 
         #region PrivateVariables
+
         private string registrationPlate;
         private string color;
         private string brand;
@@ -32,8 +33,8 @@ namespace GroupAssignmentpart1
         private double fee;
         private int parkingSpot;
         private DateTime parkingTime;
+        private DateTime checkOutTime;
 
-        TextInfo thisTI = new CultureInfo("en-US", false).TextInfo;
         #endregion
 
         #region PublicProperties
@@ -92,6 +93,12 @@ namespace GroupAssignmentpart1
             set { parkingTime = value; }
         }
 
+        public DateTime CheckOutTime
+        {
+            get { return checkOutTime; }
+            private set { checkOutTime = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -126,9 +133,9 @@ namespace GroupAssignmentpart1
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
                                 new string[]{ this.GetType().Name,
                                               registrationPlate.ToUpper(),
-                                              thisTI.ToTitleCase(brand),
-                                              thisTI.ToTitleCase(model),
-                                              thisTI.ToTitleCase(color),
+                                              brand,
+                                              model,
+                                              color,
                                               numOfDoors.ToString(),
                                               numberOfWheels.ToString(),
                                               parkingTime.ToString(),
@@ -143,13 +150,19 @@ namespace GroupAssignmentpart1
 
         public double PayCheckOut()
         {
-            return (DateTime.Now - parkingTime).TotalMinutes * fee;
+            checkOutTime = DateTime.Now;
+
+            return (checkOutTime - parkingTime).TotalMinutes * fee;
         }
 
         #endregion
 
         #region Serialization management
 
+        /// <summary>
+        /// Creates a new branch to the XML tree, containing all informations related to the vehicle
+        /// </summary>
+        /// <returns></returns>
         public XElement Serialize()
         {
             XElement element = new XElement("Vehicle",
@@ -160,35 +173,52 @@ namespace GroupAssignmentpart1
                 new XElement("NumberOfWheels", numberOfWheels.ToString()),
                 new XElement("NumberOfDoors", numOfDoors.ToString()),
                 new XElement("Fee", fee.ToString()),
+                new XElement("ParkingSpot", parkingSpot.ToString()),
                 new XElement("ParkingTime",
                     new XElement("Year", parkingTime.Year),
                     new XElement("Month", parkingTime.Month),
                     new XElement("Day", parkingTime.Day),
                     new XElement("Hours", parkingTime.Hour),
-                    new XElement("Minutes", parkingTime.Hour),
-                    new XElement("Seconds", parkingTime.Hour)));
+                    new XElement("Minutes", parkingTime.Minute),
+                    new XElement("Seconds", parkingTime.Second)));
 
             return element;
         }
 
-        public void Deserialize(XElement element)
+        /// <summary>
+        /// Parses and extracts the information about the vehicle
+        /// </summary>
+        /// <param name="element">Branch from the XML tree where the informations are stored</param>
+        /// <returns>Indicates if the deserialization went fine or not</returns>
+        public bool Deserialize(XElement element)
         {
-            registrationPlate = (string)element.Element("LicencePlate");
-            color = (string)element.Element("Color");
-            brand = (string)element.Element("Brand");
-            model = (string)element.Element("Model");
-            numberOfWheels = 0;
-            int.TryParse((string)element.Element("NumberOfWheels"), out numberOfWheels);
-            numOfDoors = 0;
-            int.TryParse((string)element.Element("NumberOfDoors"), out numOfDoors);
-            fee = (double)element.Element("Fee");
-            element = element.Element("ParkingTime");
-            parkingTime = new DateTime(int.Parse((string)element.Element("Year")),
-                                       int.Parse((string)element.Element("Month")),
-                                       int.Parse((string)element.Element("Day")),
-                                       int.Parse((string)element.Element("Hours")),
-                                       int.Parse((string)element.Element("Minutes")),
-                                       int.Parse((string)element.Element("Seconds")));
+            try
+            {
+                registrationPlate = (string)element.Element("LicencePlate");
+                color = (string)element.Element("Color");
+                brand = (string)element.Element("Brand");
+                model = (string)element.Element("Model");
+                numberOfWheels = 0;
+                int.TryParse((string)element.Element("NumberOfWheels"), out numberOfWheels);
+                numOfDoors = 0;
+                int.TryParse((string)element.Element("NumberOfDoors"), out numOfDoors);
+                fee = (double)element.Element("Fee");
+                parkingSpot = -1;
+                int.TryParse((string)element.Element("ParkingSpot"), out parkingSpot);
+                element = element.Element("ParkingTime");
+                parkingTime = new DateTime(int.Parse((string)element.Element("Year")),
+                                           int.Parse((string)element.Element("Month")),
+                                           int.Parse((string)element.Element("Day")),
+                                           int.Parse((string)element.Element("Hours")),
+                                           int.Parse((string)element.Element("Minutes")),
+                                           int.Parse((string)element.Element("Seconds")));
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         #endregion

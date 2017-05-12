@@ -149,7 +149,7 @@ namespace GroupAssignmentpart1
 
             do
             {
-                string input=menu.Show();
+                string input = menu.Show();
                 if (input == "0")
                     exit = true;
                 else
@@ -235,9 +235,8 @@ namespace GroupAssignmentpart1
             string color = GetString("color", vehicleName);
 
             Motorcycle motorcycle = new Motorcycle(registrationPlate, color, brand, model);
-
-            int parkingPlace = GarageLogic.ParkVehicle(motorcycle);
-            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+            GarageLogic.CheckIn(motorcycle);
+            DisplayCheckInInformations(motorcycle, vehicleName);
         }
 
         private static void CheckInCar()
@@ -251,9 +250,8 @@ namespace GroupAssignmentpart1
             int numOfDoors = GetInteger("number of doors", vehicleName);
 
             Car car = new Car(registrationPlate, color, brand, model, numOfDoors);
-
-            int parkingPlace = GarageLogic.ParkVehicle(car);
-            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+            GarageLogic.CheckIn(car);
+            DisplayCheckInInformations(car, vehicleName);
         }
 
         private static void CheckInBus()
@@ -266,9 +264,8 @@ namespace GroupAssignmentpart1
             string color = GetString("color", vehicleName);
 
             Bus bus = new Bus(registrationPlate, color, brand, model);
-
-            int parkingPlace = GarageLogic.ParkVehicle(bus);
-            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+            GarageLogic.CheckIn(bus);
+            DisplayCheckInInformations(bus, vehicleName);
         }
 
         private static void CheckInTruck()
@@ -282,9 +279,28 @@ namespace GroupAssignmentpart1
             int numberOfWheels = GetInteger("number of wheels", vehicleName);
 
             Truck truck = new Truck(registrationPlate, color, brand, model, numberOfWheels);
+            GarageLogic.CheckIn(truck);
+            DisplayCheckInInformations(truck, vehicleName);
+        }
 
-            int parkingPlace = GarageLogic.ParkVehicle(truck);
-            Console.WriteLine("Your {0} has been parked on place {1}", vehicleName, parkingPlace);
+        private static void DisplayCheckInInformations(Vehicle vehicle, string vehicleName)
+        {
+            Console.Clear();
+            string[] dateTime = vehicle.ParkingTime.ToString().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            string strVehicle = string.Format("{0} {1}", vehicle.Brand, vehicle.Model).Replace("  ", " ").Trim();
+
+            if (strVehicle.Length == 0)
+                strVehicle = vehicleName;
+
+            strVehicle = string.Format("{0} {1}", vehicle.Color.ToLower(), strVehicle).Trim();
+
+            Console.WriteLine("On the {0} at {1}, your {2} has been parked on place {3}.\n\nHave a good day!",
+                              dateTime.First().ToString(),
+                              dateTime.Last().ToString(),
+                              strVehicle,
+                              vehicle.ParkingSpot.ToString());
+            Console.ReadKey();
         }
 
         #endregion
@@ -301,7 +317,7 @@ namespace GroupAssignmentpart1
                 Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
 
                 int noVehicle = 1;
-                foreach (Vehicle vehicle in GarageLogic.Vehicles())
+                foreach (Vehicle vehicle in GarageLogic.Vehicles().OrderBy(v => v.ParkingTime))
                 {
                     menuItems.Add(noVehicle.ToString(), vehicle.ToString());
                     vehicles.Add(noVehicle.ToString(), vehicle);
@@ -321,9 +337,12 @@ namespace GroupAssignmentpart1
                     Vehicle vehicle = vehicles[input];
                     if (ConfirmCheckOut(vehicle))
                     {
-                        double totalPrice = GarageLogic.UnparkVehicle(vehicle);
-                        Console.WriteLine("The vehicle has been parked since {0} with a fee of {1},\nwhich gives a total of {2:N2}",
+                        Console.Clear();
+                        double totalPrice = GarageLogic.CheckOut(vehicle);
+                        Console.WriteLine("{0}:\nThe vehicle has been parked since {1} ({2} minutes) with a fee of {3},\nwhich gives a total of {4:N2}",
+                                          vehicle.CheckOutTime.ToString(),
                                           vehicle.ParkingTime.ToString(),
+                                          Math.Round((vehicle.CheckOutTime - vehicle.ParkingTime).TotalMinutes, 2),
                                           vehicle.Fee,
                                           totalPrice);
                         Console.ReadKey();
@@ -353,7 +372,7 @@ namespace GroupAssignmentpart1
             Dictionary<string, Vehicle> dicVehicles = new Dictionary<string, Vehicle>();
 
             int noVehicle = -1;
-            foreach (Vehicle vehicle in vehicles)
+            foreach (Vehicle vehicle in vehicles.OrderBy(v => v.ParkingTime))
             {
                 menuItems.Add(noVehicle.ToString(), vehicle.ToString());
                 dicVehicles.Add(noVehicle.ToString(), vehicle);
@@ -385,12 +404,12 @@ namespace GroupAssignmentpart1
 
         private static DateTime GetDateTime(string timeInput)
         {
-            string Format = "dd/MM/yyyy HH:mm";
-            Console.WriteLine("Enter the date you parked in (dd/MM/yyyy hh:mm) time format.");
+            string format = "dd/MM/yyyy HH:mm";
+            Console.WriteLine("Enter the date you parked in ({0}) time format.", format);
 
             timeInput = Console.ReadLine();
             DateTime now = DateTime.Now.Date;
-            DateTime dateTime = DateTime.ParseExact(timeInput, Format, CultureInfo.InvariantCulture);
+            DateTime dateTime = DateTime.ParseExact(timeInput, format, CultureInfo.InvariantCulture);
 
             return dateTime;
         }
@@ -442,7 +461,7 @@ namespace GroupAssignmentpart1
             }
             while (!inputOK);
 
-            return input;
+            return new CultureInfo("en-US", false).TextInfo.ToTitleCase(input);
         }
 
         private static string GetRegistrationPlate(string vehicleName)

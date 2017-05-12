@@ -379,7 +379,8 @@ namespace GroupAssignmentpart1
                                       "Color",
                                       "Doors",
                                       "Wheels",
-                                      "Time parked" };
+                                      "Time parked",
+                                      "Parking place" };
         }
 
         private static DateTime GetDateTime(string timeInput)

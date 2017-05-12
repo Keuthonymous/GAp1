@@ -125,13 +125,14 @@ namespace GroupAssignmentpart1
         {
             return string.Join(Constants.MENU_ITEMS_SEPARATOR.ToString(),
                                 new string[]{ this.GetType().Name,
-                                              thisTI.ToTitleCase(color),
+                                              registrationPlate.ToUpper(),
                                               thisTI.ToTitleCase(brand),
                                               thisTI.ToTitleCase(model),
-                                              registrationPlate.ToUpper(),
+                                              thisTI.ToTitleCase(color),
                                               numOfDoors.ToString(),
                                               numberOfWheels.ToString(),
-                                              parkingTime.ToString() });
+                                              parkingTime.ToString(),
+                                              parkingSpot.ToString() });
         }
 
         public bool Equals(Vehicle other)
